@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 - Module 3 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .results-content {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #558b2f);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .score-circle::after {
+            content: '%';
+            font-size: 24px;
+            margin-left: 5px;
+        }
+
+        .results-detail {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-earned h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .start-screen p {
+            color: #666;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .mission-briefing {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .mission-briefing h3 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .mission-briefing ul {
+            list-style: none;
+            padding: 0;
+            color: #555;
+        }
+
+        .mission-briefing li {
+            padding: 6px 0;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .mission-briefing li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📊</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 3 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Structured Data Intelligence Mission</h2>
+                <p>You've learned about structured data formats, when to use CSV vs JSON, how to generate valid structured outputs, and how to connect AI-generated data to real workflows. This checkpoint tests your understanding of format selection, validation, and practical application.</p>
+                
+                <div class="mission-briefing">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li>10 questions covering structured data fundamentals</li>
+                        <li>Focus on format selection, validation, and workflow integration</li>
+                        <li>You must score 90% or higher to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of data format decision-making</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">Begin Mission</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <div class="results-content">
+                    <h2 id="resultMessage"></h2>
+                    <div class="score-circle" id="scoreCircle">
+                        <span id="scorePercent"></span>
+                    </div>
+                    <div class="results-detail">
+                        <p style="font-size: 18px; color: #666;">
+                            You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                        </p>
+                    </div>
+                    <div id="badgeSection"></div>
+                    <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "According to the module, what makes structured data fundamentally different from the way humans typically organize information?",
+                options: [
+                    "Structured data uses predictable, consistent formats that computers can reliably parse and process",
+                    "Structured data is always stored in databases while human-organized information uses documents",
+                    "Structured data requires programming knowledge to create while human information does not",
+                    "Structured data can only contain numbers and dates, not text or descriptions"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly right! The module explains: 'When you write a report for humans, you use paragraphs, headers, and formatting to make it readable. When you create data for systems to use, you need a format that machines can parse reliably.' The key is predictable, machine-parseable structure.",
+                    incorrect: "Review Part 1: Understanding Structured Data. The module states: 'Structured data is information organized in a predictable, consistent format that computers can easily parse and process.' It's about machine-readable structure, not storage location, programming requirements, or content type."
+                }
+            },
+            {
+                question: "Your team needs to generate 50 sample customer records for testing a new analytics dashboard. The data includes customer names, signup dates, account tiers (bronze/silver/gold), and total purchases. The dashboard imports data via drag-and-drop file upload and your analyst wants to validate the data in Excel before import. Which format best fits these requirements?",
+                options: [
+                    "XML because analytics systems need the validation features and metadata support",
+                    "JSON because modern dashboards expect JSON and it preserves the tier categories as arrays",
+                    "CSV because it's simple flat data that works with both Excel validation and dashboard import",
+                    "A combination of JSON for the dashboard and CSV for Excel to ensure compatibility"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! This is flat tabular data (no nested structures), needs Excel review (CSV is native), and most drag-and-drop dashboard imports accept CSV. The module states: 'Use CSV when: Importing data into Excel or Google Sheets, Simple tabular data, When non-technical people need to view/edit the data.'",
+                    incorrect: "Review Part 2: The Three Main Formats and Part 8: Format Decision Framework. This is simple, flat data (customer records in rows, attributes in columns). The module says: 'If going into Excel or Google Sheets for analysis: Use CSV' and 'If the data is simple and flat (no nested objects): Use CSV.' The analyst needs to validate in Excel, which is CSV's strength."
+                }
+            },
+            {
+                question: "In the module's Exercise 2, what is the PRIMARY purpose of validating JSON with JSONLint before using it?",
+                options: [
+                    "To check if the JSON contains offensive or inappropriate content",
+                    "To verify the JSON syntax is correct so systems can parse it without errors",
+                    "To ensure the JSON file size is optimized for web transmission",
+                    "To confirm that all values in the JSON match expected business rules"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! The module states: 'If it's valid, you'll see Valid JSON. If it's invalid, you'll see error messages.' Validation checks SYNTAX (proper brackets, commas, quotes) not business logic or content appropriateness. Systems will fail to parse invalid JSON syntax.",
+                    incorrect: "Review Exercise 2: Generate Valid JSON Data, specifically Step 4: Validate the JSON. JSONLint checks for syntax errors like 'Missing comma between objects,' 'Extra comma after last object,' 'Quotes not closed properly.' It ensures the structure is parseable, not that values make business sense or are appropriate."
+                }
+            },
+            {
+                question: "You generate JSON data and see this structure: {\"amount\": \"150.00\", \"quantity\": \"5\"}. You validate it with JSONLint and it says 'Valid JSON.' However, the module warns this could still cause problems. Why?",
+                options: [
+                    "The field names are too short and should be more descriptive",
+                    "JSONLint only checks syntax, not whether your data will work correctly in the actual system",
+                    "The decimal point in the amount will cause errors in most systems",
+                    "JSON files should always include a timestamp field for tracking"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! The module shows this example and states: 'This is technically valid JSON, but if you're feeding this to a system that expects numbers, it will fail.' JSONLint checks if brackets and commas are correct (syntax), but not if your numbers are in quotes when they shouldn't be (data types).",
+                    incorrect: "Review Part 4: Common Errors, specifically 'Error 3: Numbers as strings when they should be numbers.' The module explains that putting numbers in quotes (\"150.00\" instead of 150.00) is valid JSON syntax but will fail if the system expects actual numbers. JSONLint checks structure, not whether values make sense for your use case."
+                }
+            },
+            {
+                question: "According to the module, when would XML be the APPROPRIATE format choice?",
+                options: [
+                    "When building a new project that needs to exchange data with modern web APIs",
+                    "When creating simple tabular data that needs to be imported into Excel for analysis",
+                    "When a legacy system specifically requires XML format or working with SOAP APIs",
+                    "When you need the most compact file size for data transmission over slow networks"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module's XML section states: 'When to use XML: When a system specifically requires XML format, Working with legacy enterprise software' and lists SOAP APIs as a specific use case. It also says: 'If you don't know if you need XML, you probably don't.'",
+                    incorrect: "Review Part 2: XML (eXtensible Markup Language) section. The module is clear: 'When NOT to use XML: New projects (use JSON instead), Simple data structures (use CSV).' XML is for: 'Legacy enterprise systems, SOAP APIs (older API standard).' The module explicitly says to focus on CSV and JSON unless XML is specifically required."
+                }
+            },
+            {
+                question: "You prompt Claude: 'Create test data for our payment system with transactions from different merchants.' Claude returns a paragraph describing sample transactions. According to the module's prompting guidance, what was the PRIMARY mistake?",
+                options: [
+                    "You didn't specify the output format (CSV/JSON) or define the required data structure",
+                    "You didn't provide Claude with real merchant names to use as examples",
+                    "You should have asked for the data in an artifact instead of regular text",
+                    "You didn't specify how many transactions to generate"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module's Part 3 emphasizes: 'Step 1: Specify the format explicitly. Step 2: Define the structure clearly.' The bad example is: 'Give me some sample customer data' while the good example explicitly states 'in CSV format with these columns: customer_id, customer_name...'",
+                    incorrect: "Review Part 3: Getting Claude to Produce Structured Data, The Basic Pattern. The module states the essential steps are: 'Specify the format explicitly' and 'Define the structure clearly.' You need to say 'Generate X records in CSV/JSON format with columns/fields: [list].' The quantity, artifact creation, and example data are secondary to format specification."
+                }
+            },
+            {
+                question: "The module's Advanced Techniques section recommends generating transaction data with realistic patterns (70% between $20-$100, 20% between $100-$300, 10% over $300) rather than uniform random distribution. What is the reasoning behind this approach?",
+                options: [
+                    "Claude produces more accurate data when given specific percentage distributions to follow",
+                    "Systems can only properly index and query data that follows normal distribution patterns",
+                    "Uniform random data creates larger file sizes that are harder to import into databases",
+                    "Test data reflecting real-world patterns reveals issues that uniform data would miss"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! The module explicitly states: 'Why this matters: Test data that reflects real patterns catches more issues than uniform random data.' Realistic distributions help identify edge cases, performance issues, and business logic problems that would occur with actual usage patterns.",
+                    incorrect: "Review Part 7: Advanced Techniques, Technique 1. The module contrasts 'Basic approach (less useful): Generate 100 transactions with random amounts' vs 'Advanced approach (more realistic)' with percentage distributions, then explains: 'Test data that reflects real patterns catches more issues than uniform random data.' This is about testing quality, not Claude's capabilities or system requirements."
+                }
+            },
+            {
+                question: "You open a CSV file in Notepad and see: merchant_name,amount\\nJoe's Coffee, Bakery,15.50\\n\\nWhat is the problem and how should you fix it?",
+                options: [
+                    "The file needs to be saved with a different file extension before it will work properly",
+                    "The merchant name contains a comma which breaks the CSV structure; wrap 'Joe's Coffee, Bakery' in double quotes",
+                    "The amount should not have a decimal point in CSV format; round to whole numbers",
+                    "The header row is incomplete; add a date column to the header"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! This is CSV Error 1 from Part 4: 'The comma in Joe's Coffee, Bakery creates an extra column.' The solution: 'Wrap values with commas in quotes' resulting in: 'Joe's Coffee, Bakery',15.50. The module states: 'How to prevent: Tell Claude to escape commas properly.'",
+                    incorrect: "Review Part 4: Common Errors and How to Fix Them, CSV Error 1: Commas in the data break the structure. The module shows this exact scenario: 'Joe's Coffee, Bakery,15.50' where the comma in the name creates an extra column. The fix is wrapping in quotes: '\"Joe's Coffee, Bakery\",15.50'."
+                }
+            },
+            {
+                question: "A colleague asks you to help them set up a workflow where Claude generates product data that gets imported into their inventory system. Based on the module's workflow pattern, what should be your FIRST step before prompting Claude?",
+                options: [
+                    "Generate sample data immediately to see what Claude produces, then adjust based on results",
+                    "Ask Claude what format would be best for inventory system imports",
+                    "Find out what format the inventory system requires and what fields it expects",
+                    "Create a validation checklist to test the data after Claude generates it"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module's workflow pattern starts with: '1. Define requirements → What format does the destination system need?' You must know the target system's requirements BEFORE generating data. Only then do you: 2. Generate with Claude, 3. Validate, 4. Import/use, 5. Verify.",
+                    incorrect: "Review Part 6: Connecting to Workflows. The workflow pattern clearly states: '1. Define requirements → What format does the destination system need? 2. Generate with Claude → Get structured data in that format 3. Validate → Check for errors 4. Import/use → Load into target system 5. Verify → Confirm data imported correctly.' You need system requirements first."
+                }
+            },
+            {
+                question: "Your application needs to store user preferences including notification settings (email on/off, SMS on/off, push on/off), display language, theme choice, and a list of favorite dashboard widgets. The preferences are loaded when users log in. According to the module's Format Decision Framework, which format is most appropriate?",
+                options: [
+                    "CSV because user preferences should be stored as simple tabular data for easy querying",
+                    "JSON because it handles nested structures, preserves boolean types, and is standard for application configuration",
+                    "XML because user preferences require the validation and schema support that XML provides",
+                    "A combination of CSV for the simple fields and JSON for the widget list"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! This has nested data (notification settings object, widget array), needs to preserve data types (on/off values), and is application configuration. The module states: 'When to use JSON: Configuration files, Complex nested data structures, Preserving data types (numbers, booleans, null), When data needs to be consumed by code/systems.'",
+                    incorrect: "Review Part 2: JSON section and Part 8: Format Decision Framework. This is configuration data with nested structures (settings object, array of widgets) and on/off values. The module says: 'Use JSON when: Configuration files, Complex nested data structures, When data needs to be consumed by code/systems, Preserving data types.' CSV can't handle nested objects or preserve true/false values."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 SIGNALS INTELLIGENCE OFFICER STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've mastered structured data formats and understand how to transform AI from a writing tool into a data generation system. You know when to use CSV, JSON, or XML, how to validate structured outputs, and how to connect AI-generated data to real business workflows. You're cleared to proceed to Module 4!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 3 and focus on: the difference between structured and unstructured data, when to use CSV vs JSON vs XML, how to structure prompts for valid outputs, common validation errors and fixes, and the workflow pattern for connecting AI to systems. Structured data is the foundation for real AI integration!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
