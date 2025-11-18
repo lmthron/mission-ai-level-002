@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 Module 1 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-example h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .code-example pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #4A90E2;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            line-height: 1.7;
+            margin-top: 8px;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #e53935;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4A90E2, #357abd);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: #7CB342;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            background: #689f38;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 179, 66, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 25px;
+            }
+
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📖</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 1 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Claude Skills - Fundamentals</h2>
+                <p>Review these key concepts about Claude Skills before taking your Module 1 checkpoint quiz. Understanding Skills is essential for building reusable, specialized AI workflows.</p>
+            </div>
+
+            <!-- What Are Skills -->
+            <div class="concept-section">
+                <div class="concept-title">What Are Claude Skills?</div>
+                
+                <div class="concept-box">
+                    <h4>The Simple Explanation</h4>
+                    <p>Claude Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Think of them as reusable instruction manuals that teach Claude how you want specific tasks done.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Progressive Disclosure - How Skills Load</h4>
+                    <p>Claude doesn't load every Skill into memory all the time. Instead:</p>
+                    <ul>
+                        <li>Claude keeps only lightweight metadata (name and description) for each Skill</li>
+                        <li>When your request matches a Skill, Claude loads just that Skill's full instructions</li>
+                        <li>This keeps Claude fast while giving it access to specialized expertise</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Skills Are Portable</h4>
+                    <p>A Skill you create works in Claude web, Claude Code (terminal), and the Claude API without modification. Build once, use everywhere.</p>
+                </div>
+            </div>
+
+            <!-- Skills vs Other Features -->
+            <div class="concept-section">
+                <div class="concept-title">Skills vs. Other Claude Features</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Skills</h4>
+                        <ul>
+                            <li>• Activate dynamically when relevant</li>
+                            <li>• Task-specific procedures</li>
+                            <li>• Work everywhere across Claude</li>
+                            <li>• For: Repeatable workflows</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Projects</h4>
+                        <ul>
+                            <li>• Static knowledge always loaded</li>
+                            <li>• Background context</li>
+                            <li>• Only in that Project workspace</li>
+                            <li>• For: Accumulated context</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Custom Instructions</h4>
+                        <ul>
+                            <li>• Apply broadly to all chats</li>
+                            <li>• Your preferences and style</li>
+                            <li>• Work everywhere</li>
+                            <li>• For: General working style</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>MCP</h4>
+                        <ul>
+                            <li>• Connects to external services</li>
+                            <li>• Provides tools and data access</li>
+                            <li>• Requires configuration</li>
+                            <li>• For: System integration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>You Can Use Them Together:</strong>
+                    <p>MCP gives Claude access to tools, Skills teach Claude how to use those tools. Projects provide context, Skills provide procedures. Custom Instructions set your style, Skills apply specialized standards.</p>
+                </div>
+            </div>
+
+            <!-- Good vs Bad Candidates -->
+            <div class="concept-section">
+                <div class="concept-title">What Makes a Good Skill?</div>
+                
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Good Candidates for Skills</h4>
+                        <ul>
+                            <li>• Tasks you do repeatedly with consistent standards</li>
+                            <li>• Workflows requiring specific steps in order</li>
+                            <li>• Brand or style guidelines applied consistently</li>
+                            <li>• Analysis frameworks used regularly</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Not Good for Skills</h4>
+                        <ul>
+                            <li>• One-off tasks (just use good prompting)</li>
+                            <li>• Tasks that vary significantly each time</li>
+                            <li>• Simple requests with no specialized knowledge needed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Structure -->
+            <div class="concept-section">
+                <div class="concept-title">Basic Skill Anatomy</div>
+                
+                <div class="code-example">
+                    <h4>SKILL.md File Structure</h4>
+                    <pre>---
+name: your-skill-name
+description: Clear description of when to use this skill
+---
+
+# Your Skill Name
+
+[Instructions for Claude go here]
+
+## Examples
+- Example 1
+- Example 2
+
+## Guidelines
+- Guideline 1
+- Guideline 2</pre>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Critical Components</h4>
+                    <ul>
+                        <li><strong>YAML Frontmatter (REQUIRED):</strong> Name (lowercase-with-hyphens only) and description</li>
+                        <li><strong>Instructions (REQUIRED):</strong> Clear, step-by-step guidance for Claude</li>
+                        <li><strong>Examples (Highly Recommended):</strong> Show Claude what success looks like</li>
+                        <li><strong>Guidelines (Optional):</strong> Constraints or requirements to follow</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ YAML Name Field Requirements</h4>
+                    <p><strong>Must use:</strong> Lowercase letters, numbers, and hyphens only (64 characters max)</p>
+                    <p><strong>Good:</strong> brand-guidelines, meeting-notes-formatter, data-analyzer-v2</p>
+                    <p><strong>Bad:</strong> Brand Guidelines, Meeting_Notes, Data Analyzer</p>
+                    <p style="margin-top: 10px;"><em>Note: The description field CAN use capitals, spaces, and punctuation.</em></p>
+                </div>
+            </div>
+
+            <!-- Creating Skills -->
+            <div class="concept-section">
+                <div class="concept-title">Creating Skills - Two Methods</div>
+                
+                <div class="steps-box">
+                    <h4>Method 1: Using skill-creator (If Available)</h4>
+                    <ol>
+                        <li>Enable skill-creator in Settings > Capabilities > Skills</li>
+                        <li>Say: "I want to create a skill for [what you need]"</li>
+                        <li>Answer Claude's questions about the task</li>
+                        <li>Provide any reference materials</li>
+                        <li>Download the ZIP file Claude creates</li>
+                        <li>Upload the ZIP to Settings > Capabilities > Skills</li>
+                    </ol>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Method 2: Manual Creation (More Control)</h4>
+                    <ol>
+                        <li>Create a folder for your Skill</li>
+                        <li>Create SKILL.md file inside the folder</li>
+                        <li>Add YAML frontmatter and instructions</li>
+                        <li>(Optional) Add resource files (logos, templates, examples)</li>
+                        <li>Compress the entire folder to ZIP format</li>
+                        <li>Upload ZIP to Settings > Capabilities > Skills</li>
+                    </ol>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ CRITICAL: Enable Code Execution First</h4>
+                    <p>Skills require Code Execution to be enabled in Settings > Capabilities. Do this BEFORE creating or uploading Skills, or they won't work. If your Skill hangs or doesn't respond, Code Execution is usually why.</p>
+                </div>
+            </div>
+
+            <!-- Adding Resources -->
+            <div class="concept-section">
+                <div class="concept-title">Adding Resources to Skills (Optional)</div>
+                
+                <div class="concept-box">
+                    <h4>What You Can Include</h4>
+                    <ul>
+                        <li><strong>Logos (.png, .svg, .jpg):</strong> Claude inserts into documents</li>
+                        <li><strong>Templates (.pptx, .docx, .xlsx):</strong> Claude uses as starting points</li>
+                        <li><strong>Data examples (.csv, .json, .txt):</strong> Reference formats</li>
+                        <li><strong>Style guides (.pdf, images):</strong> Visual brand standards</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important Size Limit</h4>
+                    <p>Claude has an 8MB uncompressed size limit for skill uploads. Large template files often exceed this limit. Solution: Create separate skills (one for logos/colors, another for templates) or use streamlined template files.</p>
+                </div>
+            </div>
+
+            <!-- Using Skills -->
+            <div class="concept-section">
+                <div class="concept-title">How to Invoke Skills</div>
+                
+                <div class="concept-box">
+                    <h4>Method 1: Mention the Task Naturally</h4>
+                    <p>Just describe what you need. If it matches a Skill's description, Claude will use it automatically.</p>
+                    <p><em>Example: "Create a quarterly business review presentation"</em></p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Method 2: Reference by Name</h4>
+                    <p>Explicitly mention the Skill name in your request.</p>
+                    <p><em>Example: "Use the Meeting Notes Formatter to structure these notes"</em></p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Method 3: Upload Related Materials</h4>
+                    <p>Upload a document that triggers the Skill context automatically.</p>
+                </div>
+            </div>
+
+            <!-- Testing Skills -->
+            <div class="concept-section">
+                <div class="concept-title">Testing Your Skills</div>
+                
+                <div class="steps-box">
+                    <h4>Three Tests to Run</h4>
+                    <ol>
+                        <li><strong>Recognition Test:</strong> Does Claude recognize and load your Skill? Check the thinking process.</li>
+                        <li><strong>Output Test:</strong> Does it produce what you specified? Check format, structure, guidelines.</li>
+                        <li><strong>Edge Cases Test:</strong> Try with minimal information, lots of details, missing elements.</li>
+                    </ol>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Refine If Needed</h4>
+                    <ul>
+                        <li>Download your Skill ZIP and extract it</li>
+                        <li>Edit SKILL.md to be more specific</li>
+                        <li>Add more examples if output wasn't right</li>
+                        <li>Re-zip and re-upload</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="concept-section">
+                <div class="concept-title">Skill Management Best Practices</div>
+                
+                <div class="concept-box">
+                    <h4>Organization</h4>
+                    <ul>
+                        <li>Keep Skills focused on one task or workflow</li>
+                        <li>Don't create mega-Skills that try to do everything</li>
+                        <li>Name Skills clearly and descriptively</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Maintenance</h4>
+                    <ul>
+                        <li>Update Skills when your processes change</li>
+                        <li>Remove Skills you no longer use (20 Skill limit on web)</li>
+                        <li>Version your Skills if you're iterating</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Testing</h4>
+                    <ul>
+                        <li>Always test new Skills before relying on them</li>
+                        <li>Try edge cases and unusual inputs</li>
+                        <li>Verify output quality meets your standards</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Security</h4>
+                    <ul>
+                        <li>Only install Skills from trusted sources</li>
+                        <li>Review any Skill before enabling it</li>
+                        <li>Don't include sensitive information in Skill files (passwords, API keys)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Skills are reusable instruction manuals that teach Claude how to perform specialized tasks. Progressive disclosure keeps Claude fast. Good Skills are focused, well-documented, and include clear examples. Enable Code Execution first, test thoroughly, and maintain Skills as your processes evolve.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed Claude Skills fundamentals. Now demonstrate your understanding and earn Field Operative status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-002/module1-quiz.html" class="quiz-button">Take Module 1 Quiz</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
