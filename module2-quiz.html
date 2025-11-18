@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 - Module 2 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #bdbdbd;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9ccc65);
+            box-shadow: 0 8px 24px rgba(124, 179, 66, 0.4);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            box-shadow: 0 8px 24px rgba(229, 57, 53, 0.4);
+        }
+
+        .score-label {
+            font-size: 16px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .result-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1B365D;
+            margin: 20px 0;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .badge-earned {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #1B365D, #2a4a7a);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: #7CB342;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 2 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Interactive Documents Mission</h2>
+                <p class="intro">
+                    You've learned about Claude Artifacts - how to create interactive, standalone documents and tools. This checkpoint tests your understanding of artifact types, when to use them, and how to build effective interactive outputs.
+                </p>
+                
+                <div class="mission-brief">
+                    <strong>Mission Briefing:</strong><br>
+                    • 10 questions covering Claude Artifacts fundamentals<br>
+                    • Focus on artifact types, use cases, iteration, and troubleshooting<br>
+                    • You must score 90% or higher to pass<br>
+                    • You can retake the quiz if needed<br>
+                    • Demonstrate mastery of interactive document creation
+                </div>
+
+                <button class="btn-primary" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+                </div>
+            </div>
+
+            <div id="results" class="results">
+                <div id="scoreCircle" class="score-circle">
+                    <div>
+                        <span id="scorePercent">0</span>%
+                        <div class="score-label">MISSION SCORE</div>
+                    </div>
+                </div>
+                
+                <div class="result-message" id="resultMessage"></div>
+                
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Questions Correct:</span>
+                        <strong id="correctCount">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Total Questions:</span>
+                        <strong id="totalCount">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Pass Threshold:</span>
+                        <strong>90%</strong>
+                    </div>
+                </div>
+
+                <div id="badgeSection"></div>
+
+                <button class="btn-primary" onclick="resetQuiz()">Retake Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "According to the module, what is the key characteristic that distinguishes artifacts from regular Claude responses?",
+                options: [
+                    "Artifacts use more advanced AI models to generate higher quality outputs",
+                    "Artifacts are automatically saved to your account while responses are temporary",
+                    "Artifacts can only be created when using Claude Pro or Enterprise subscriptions",
+                    "Artifacts appear in a separate panel and are standalone, interactive, shareable documents"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! The module defines artifacts as 'interactive, standalone documents that Claude creates in a separate window alongside your conversation.' They're separate and persistent, interactive, shareable, and iterative.",
+                    incorrect: "Review 'What Are Claude Artifacts?' in Part 1. The key distinctions are: artifacts appear in their own panel (not in chat), they're standalone and persistent, interactive, shareable, and you can iterate on them. They don't use different models - the difference is in format and presentation."
+                }
+            },
+            {
+                question: "When should you use an artifact versus a regular response?",
+                options: [
+                    "Use artifacts when creating deliverables someone will use; use responses for advice or explanations",
+                    "Use artifacts for all Claude outputs to make them easier to reference later",
+                    "Use artifacts for complex requests and responses for simple questions",
+                    "Use artifacts when you need Claude to remember the information long-term"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module's decision tree shows: 'Explain how our API works' → Regular response. 'Create documentation for our API' → Artifact. Use artifacts when you're creating something, responses when discussing or explaining.",
+                    incorrect: "Review the decision tree examples in Part 1. The distinction is about PURPOSE: Artifacts are for deliverables (documents, tools, visualizations). Responses are for information, advice, and analysis. Example: 'What should I include?' → Response. 'Write the report' → Artifact."
+                }
+            },
+            {
+                question: "According to the module, what is the PRIMARY factor in choosing between Markdown, HTML, and React artifact types?",
+                options: [
+                    "The technical skill level of the person creating the artifact",
+                    "The level of interactivity and complexity needed in the final output",
+                    "Whether the artifact will be shared internally or externally",
+                    "The file size and loading speed requirements of the deliverable"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! The progression is based on interactivity needs: Markdown for formatted text documents, HTML for presentations and simple tools with basic interactivity, React for sophisticated tools with complex logic and real-time updates.",
+                    incorrect: "Review 'Types of Artifacts' in Part 1. The key distinction is complexity and interactivity: Markdown is 'Best for: Written documents that need structure.' HTML is 'Best for: Presentations, visual displays, simple tools.' React is 'Best for: Tools with complex logic, real-time updates.' The choice is about what the OUTPUT needs to do, not who creates it or where it's shared."
+                }
+            },
+            {
+                question: "The module teaches a 6-step iteration flow for artifacts. What is the correct sequence?",
+                options: [
+                    "Plan → Create → Test → Iterate → Validate → Share",
+                    "Draft → Feedback → Revision → Testing → Approval → Distribution",
+                    "Initial creation → Review → Refine → Test → Final polish → Export/share",
+                    "Create → Review → Test → Refine → Polish → Export"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module's 'Basic Flow' is: (1) Initial creation - Provide clear requirements, (2) Review - Check if it meets needs, (3) Refine - Ask for specific changes, (4) Test - Interact with artifact, (5) Final polish - Small adjustments, (6) Export/share - Download or share.",
+                    incorrect: "Review 'How to Iterate on Artifacts' in Part 2. The exact 6-step flow is: Initial creation → Review → Refine → Test → Final polish → Export/share. This emphasizes reviewing before testing and having a refinement step before final polish."
+                }
+            },
+            {
+                question: "Why does the module specifically instruct to avoid HTML form elements when creating calculators?",
+                options: [
+                    "HTML forms are deprecated and no longer supported in modern browsers",
+                    "Form elements don't display correctly in the Claude artifact panel interface",
+                    "Form elements with onsubmit try to submit to a server which doesn't exist, causing page reload or failure",
+                    "Claude cannot generate proper form validation code for artifact calculators"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module explains: 'HTML form elements (like <form> tags with onsubmit) have restrictions in the artifact environment. Forms try to submit to a server, which doesn't exist, causing the page to reload or the calculation to fail.'",
+                    incorrect: "Review 'Why We Avoid Form Elements in HTML Calculators' in Part 4. The issue is: 'Forms try to submit to a server, which doesn't exist, causing the page to reload or the calculation to fail.' The solution: use div containers with button onclick handlers instead. Forms aren't deprecated - they just don't work well in the artifact environment."
+                }
+            },
+            {
+                question: "The module provides a 'pro tip' about iterating on complex artifacts. What does it recommend?",
+                options: [
+                    "Make one change at a time for complex artifacts because multiple simultaneous changes can break things",
+                    "Always create a backup copy of the artifact before making any refinements",
+                    "Test artifacts in multiple browsers before making additional changes",
+                    "Wait for Claude to fully process each change before requesting the next refinement"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module states: 'Pro tip: Make one change at a time for complex artifacts. Multiple simultaneous changes can break things.' This prevents issues when refining sophisticated tools.",
+                    incorrect: "Review the 'Effective refinement prompts' section in Part 2. The pro tip states: 'Make one change at a time for complex artifacts. Multiple simultaneous changes can break things.' When you're working with HTML or React artifacts with lots of moving parts, making multiple changes at once increases the chance something breaks. Make one change, verify it works, then make the next."
+                }
+            },
+            {
+                question: "If Claude responds in the chat without creating an artifact panel, what should you do?",
+                options: [
+                    "Accept the chat response since Claude determined an artifact wasn't needed",
+                    "Copy the response and paste it into a new document yourself",
+                    "Start a new conversation and rewrite your prompt to be more specific",
+                    "Say 'Please create this as an artifact' or specify the format like 'Create this as an HTML artifact'"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! The module states: 'If Claude just responds in the chat without opening a side panel, it didn't create an artifact. To fix this, be more explicit: \"Create a markdown document\" or \"Build an HTML page\" or simply say: \"Please create this as an artifact.\"'",
+                    incorrect: "Review 'How to tell if Claude created an artifact' in Part 2. If Claude responds in chat instead of creating an artifact panel, simply say: 'Please create this as an artifact' or 'Put this in a markdown artifact.' Claude will move the content to an artifact. No need to start over."
+                }
+            },
+            {
+                question: "According to the module, what is Mermaid best used for?",
+                options: [
+                    "Building interactive data visualizations with real-time user input",
+                    "Developing complex web applications with sophisticated state management",
+                    "Generating diagrams and flowcharts from text descriptions without design tools",
+                    "Creating scalable logo designs and brand assets for presentations"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module describes Mermaid as: 'Diagrams and flowcharts from text descriptions' and 'Best for: Process flows, technical diagrams.' Mermaid creates diagrams without needing design tools.",
+                    incorrect: "Review the Mermaid section in 'Types of Artifacts.' Mermaid is described as: 'Diagrams and flowcharts from text descriptions. System architectures, workflows, org charts. Best for: Process flows, technical diagrams.' It's not for logos (that's SVG), not for interactive visualizations (that's React/Recharts), not for web apps (that's React)."
+                }
+            },
+            {
+                question: "The module describes iterating on artifacts with 'effective refinement prompts.' Which is an example of an EFFECTIVE refinement prompt?",
+                options: [
+                    "'Make it better and more professional looking'",
+                    "'Change the primary blue color to #031E94 to match our brand'",
+                    "'Fix all the issues you can find'",
+                    "'Improve the design and add more features'"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! The module shows: Instead of 'Fix the colors' Use: 'Change the primary blue to #031E94 to match our brand.' Specific requests get specific results.",
+                    incorrect: "Review 'Effective refinement prompts' in Part 2. The module contrasts vague vs. specific: Instead of 'Make it better' → 'Add a dark mode toggle button in the top right corner.' Instead of 'Fix the colors' → 'Change the primary blue to #031E94.' Be specific about WHAT to change and HOW."
+                }
+            },
+            {
+                question: "What is the relationship between Skills (Module 1) and Artifacts (Module 2)?",
+                options: [
+                    "Skills and Artifacts are completely separate features that don't interact with each other",
+                    "Artifacts replaced Skills in newer versions of Claude as a more powerful feature",
+                    "Skills are for beginners while Artifacts are advanced features requiring technical knowledge",
+                    "Skills are instructions Claude follows when doing tasks; Artifacts are the actual outputs Claude creates"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! The module states: 'Skills: Instructions Claude follows when doing tasks. Artifacts: The actual outputs Claude creates. Skills tell Claude how to work. Artifacts are what Claude makes. They work together: A skill can specify that certain tasks should create artifacts.'",
+                    incorrect: "Review 'Artifacts vs. Skills' in Part 1. The relationship is complementary: Skills provide instructions on HOW to do tasks. Artifacts are WHAT Claude produces. Example: A brand guidelines Skill tells Claude to use specific colors, and Claude creates an artifact (document/tool) following those guidelines. They work together."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 TECHNICAL OFFICER STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've mastered Claude Artifacts and demonstrated your ability to create interactive documents, tools, and visualizations. You understand when to use different artifact types, how to iterate effectively, and how to troubleshoot common issues. You're cleared to proceed to Module 3!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 2 and focus on: what artifacts are vs. regular responses, choosing the right artifact type for different tasks, the 6-step iteration flow, form element restrictions in HTML artifacts, and React to HTML conversion. Artifacts are powerful - make sure you understand them thoroughly!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
