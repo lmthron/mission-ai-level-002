@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 - Module 1 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #bdbdbd;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9ccc65);
+            box-shadow: 0 8px 24px rgba(124, 179, 66, 0.4);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            box-shadow: 0 8px 24px rgba(229, 57, 53, 0.4);
+        }
+
+        .score-label {
+            font-size: 16px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .result-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1B365D;
+            margin: 20px 0;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .badge-earned {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #1B365D, #2a4a7a);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: #7CB342;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 1 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Field Operations Begin</h2>
+                <p class="intro">
+                    You've entered the Intermediate track. This checkpoint tests your understanding of Claude Skills - how they work, when to use them, and how to build them effectively.
+                </p>
+                
+                <div class="mission-brief">
+                    <strong>Mission Briefing:</strong><br>
+                    • 10 questions covering Claude Skills fundamentals<br>
+                    • Focus on progressive disclosure, Skill structure, and practical application<br>
+                    • You must score 90% or higher to pass<br>
+                    • You can retake the quiz if needed<br>
+                    • Demonstrate your understanding of specialized AI workflows
+                </div>
+
+                <button class="btn-primary" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+                </div>
+            </div>
+
+            <div id="results" class="results">
+                <div id="scoreCircle" class="score-circle">
+                    <div>
+                        <span id="scorePercent">0</span>%
+                        <div class="score-label">MISSION SCORE</div>
+                    </div>
+                </div>
+                
+                <div class="result-message" id="resultMessage"></div>
+                
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Questions Correct:</span>
+                        <strong id="correctCount">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Total Questions:</span>
+                        <strong id="totalCount">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Pass Threshold:</span>
+                        <strong>90%</strong>
+                    </div>
+                </div>
+
+                <div id="badgeSection"></div>
+
+                <button class="btn-primary" onclick="resetQuiz()">Retake Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is 'progressive disclosure' in the context of Claude Skills?",
+                options: [
+                    "Skills progressively improve as Claude learns from more user interactions",
+                    "Skills are revealed to users gradually as they complete training modules",
+                    "Claude shows basic features first and advanced features only when users are ready",
+                    "Claude loads full Skill instructions only when relevant, keeping lightweight metadata otherwise"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! Progressive disclosure means Claude keeps only lightweight metadata (name/description) for each Skill and loads full instructions only when your request matches that Skill. This keeps Claude fast while giving access to specialized expertise.",
+                    incorrect: "Review the 'Key Concept - Progressive Disclosure' section. Claude doesn't load every Skill into memory all the time. Instead: (1) Keeps lightweight metadata only, (2) Loads full instructions when relevant, (3) This keeps Claude fast while providing specialized expertise when needed."
+                }
+            },
+            {
+                question: "According to the module, what is the key difference between Skills and Custom Instructions?",
+                options: [
+                    "Skills work everywhere across Claude products; Custom Instructions only work in Claude web",
+                    "Custom Instructions apply broadly to all conversations; Skills are task-specific and only load when relevant",
+                    "Skills require technical knowledge to create; Custom Instructions are user-friendly",
+                    "Custom Instructions are free features; Skills require a paid Claude subscription"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! The module states: 'Custom Instructions apply broadly to all your conversations. Skills are task-specific and only load when relevant.' Example: Custom Instructions = 'Always ask clarifying questions.' Skills = 'When creating financial models, use this validation framework.'",
+                    incorrect: "Review 'Skills vs. Custom Instructions' section. Custom Instructions apply broadly to everything ('Always ask clarifying questions'). Skills are task-specific and activate when relevant ('When creating financial models, use this framework'). Both work across platforms, both are available in paid plans."
+                }
+            },
+            {
+                question: "In the YAML frontmatter of SKILL.md, what format must the 'name' field follow?",
+                options: [
+                    "Lowercase letters, numbers, and hyphens only (no spaces, no capitals, no underscores)",
+                    "Any descriptive name up to 64 characters with spaces and capitals allowed",
+                    "Title Case With Hyphens-Between-Words for readability",
+                    "Any format is acceptable as long as it's under 64 characters"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! The module explicitly states: 'name: Skill identifier using lowercase letters, numbers, and hyphens only (64 characters max)' with examples like 'brand-guidelines' ✓ vs 'Brand Guidelines' ✗",
+                    incorrect: "Review the 'YAML Frontmatter' section in Part 2. The name field must use lowercase letters, numbers, and hyphens only. Good: 'brand-guidelines', 'meeting-notes-formatter'. Bad: 'Brand Guidelines', 'Meeting_Notes'. The description field CAN have capitals and spaces, but name cannot."
+                }
+            },
+            {
+                question: "The module states that Skills are portable across all Claude products. What does this mean?",
+                options: [
+                    "You can share Skill files with other users who can import them into their Claude",
+                    "Skills automatically sync across your devices when you sign in to Claude",
+                    "A Skill you create works in Claude web, Claude Code, and the Claude API without modification",
+                    "Skills can be exported to other AI platforms like ChatGPT or Copilot"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module states: 'Skills are portable across all Claude products. A skill you create works in Claude web (claude.ai), Claude Code (terminal/IDE), and the Claude API without modification. Build once, use everywhere.'",
+                    incorrect: "Review the 'Note' in Skills vs. Other Features section. The key point is: 'Skills are portable across all Claude products. A skill you create works in Claude web, Claude Code, and the Claude API without modification. Build once, use everywhere.' This is about working across different Claude interfaces, not sharing between users or platforms."
+                }
+            },
+            {
+                question: "Which of these is a GOOD candidate for creating a Skill?",
+                options: [
+                    "A one-time project proposal you're writing for a unique opportunity",
+                    "Weekly status reports that always follow the same format and structure",
+                    "Exploratory data analysis where approach varies significantly each time",
+                    "Quick email responses that need your personal authentic voice"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! This fits the 'Good candidates for Skills' criteria: tasks you do repeatedly with consistent standards, workflows requiring specific steps in a specific order.",
+                    incorrect: "Review 'What Makes a Good Skill?' section. Good candidates: (1) Tasks done repeatedly with consistent standards, (2) Workflows with specific steps in order, (3) Standards applied consistently. Weekly reports with same format are perfect. One-off tasks, varying approaches, and work needing your unique voice are 'Not good candidates for Skills.'"
+                }
+            },
+            {
+                question: "According to the module, what are the REQUIRED components of every Skill?",
+                options: [
+                    "YAML frontmatter with name and description, plus instruction section",
+                    "Name, description, examples, guidelines, and resource files",
+                    "YAML frontmatter, instructions, examples, and guidelines",
+                    "Name field, description field, and at least three examples"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! The module states under 'Critical Components': (1) YAML Frontmatter (required) with name and description, (2) Instructions (required). Examples are 'highly recommended' and Guidelines are 'optional but useful.'",
+                    incorrect: "Review 'Critical Components' in Part 2. REQUIRED: (1) YAML frontmatter (name and description), (2) Instructions. RECOMMENDED: Examples. OPTIONAL: Guidelines. Resource files are optional extras. Only frontmatter and instructions are truly required."
+                }
+            },
+            {
+                question: "The module explains that Skills can include resource files like logos and templates. What important size limitation is mentioned?",
+                options: [
+                    "Skills are limited to 5MB total size including all resources",
+                    "There is no size limit for Skills uploaded through the web interface",
+                    "Each individual resource file must be under 2MB",
+                    "Claude has an 8MB uncompressed size limit for skill uploads"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! The module states: 'IMPORTANT SIZE LIMIT: Claude has an 8MB uncompressed size limit for skill uploads. Large template files often exceed this limit.' This is why the module suggests separate skills for brand assets vs. templates.",
+                    incorrect: "Review the 'Advanced: Adding Resources to Skills' section. The module explicitly warns: 'Claude has an 8MB uncompressed size limit for skill uploads.' This is why large templates can be problematic and the module recommends creating separate skills or using streamlined templates."
+                }
+            },
+            {
+                question: "When creating a Skill manually, what is the correct file structure and upload process?",
+                options: [
+                    "Create SKILL.md in a folder, compress the folder to ZIP, upload the ZIP file",
+                    "Create a single SKILL.md file and upload it directly without compression",
+                    "Create a folder with resources first, then add SKILL.md, upload the folder",
+                    "Use the skill-creator tool which handles file structure automatically"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Perfect! The module shows: 'Create a new folder... Inside, create a file: SKILL.md... Compress the folder into a ZIP file... Upload the ZIP.' The folder must be compressed to ZIP format for upload.",
+                    incorrect: "Review the manual creation method in Part 3. The process is: (1) Create a folder, (2) Create SKILL.md inside the folder, (3) Add any resource files (optional), (4) Compress the entire folder to ZIP, (5) Upload the ZIP. Skills must be folders compressed to ZIP format."
+                }
+            },
+            {
+                question: "According to Step 0 in the module, what must you enable BEFORE Skills will work?",
+                options: [
+                    "Projects feature in Claude settings",
+                    "Code Execution in Settings > Capabilities, or Skills cannot run",
+                    "Web search capabilities for Skills to access current information",
+                    "Advanced AI features in your Claude subscription settings"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Step 0 is explicit: 'Skills require Code Execution to be enabled. Do this first or your skill won't work.' And: 'Without Code Execution enabled, Skills cannot run. If you see your skill hanging or not responding, this is usually why.'",
+                    incorrect: "Review 'Step 0: Enable Code Execution (REQUIRED)' at the start of Part 3. The module states: 'Skills require Code Execution to be enabled. Do this first or your skill won't work.' This is in Settings > Capabilities > Code execution and file creation. Without this, Skills will hang or not respond."
+                }
+            },
+            {
+                question: "How does Claude know when to activate a Skill?",
+                options: [
+                    "Skills activate when you upload files that match the Skill's resource types",
+                    "Claude loads all enabled Skills at the start of every conversation",
+                    "Claude matches your request description against Skill descriptions and activates when relevant",
+                    "You must explicitly type the Skill name in your prompt to trigger it"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! The module explains: Claude keeps lightweight metadata (name and description). When your request matches a Skill's description, Claude loads full instructions. Method 1: 'Just describe what you need. If it matches a Skill's description, Claude will use it.'",
+                    incorrect: "Review 'How to Invoke a Skill' in Part 4. Method 1 (primary): 'Mention the Task Naturally - Just describe what you need. If it matches a Skill's description, Claude will use it.' You CAN reference by name (Method 2), but natural description is the main way. Claude uses progressive disclosure, not loading all Skills always."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 FIELD OPERATIVE STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of Claude Skills fundamentals. You understand progressive disclosure, Skill structure, when to use Skills versus other features, and how to build and manage effective Skills. You're cleared to proceed to Module 2!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 1 and focus on: progressive disclosure, Skills vs. Projects vs. Custom Instructions, YAML frontmatter requirements, Skill anatomy, and best practices for Skill management. Skills are a powerful feature - make sure you understand them thoroughly!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
