@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 - Module 5 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .results-content {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #558b2f);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .score-circle::after {
+            content: '%';
+            font-size: 24px;
+            margin-left: 5px;
+        }
+
+        .results-detail {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-earned h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .start-screen p {
+            color: #666;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .mission-briefing {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .mission-briefing h3 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .mission-briefing ul {
+            list-style: none;
+            padding: 0;
+            color: #555;
+        }
+
+        .mission-briefing li {
+            padding: 6px 0;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .mission-briefing li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 5 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Advanced Operations Mission</h2>
+                <p>You've learned advanced prompting techniques, how to connect Claude to your tools, and how to work with complex multi-document analysis. This checkpoint tests your understanding of when and how to apply these advanced capabilities strategically.</p>
+                
+                <div class="mission-briefing">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li>10 questions covering advanced prompting and integrations</li>
+                        <li>Focus on strategic application of techniques and connectors</li>
+                        <li>You must score 90% or higher to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of advanced Claude capabilities</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">Begin Mission</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <div class="results-content">
+                    <h2 id="resultMessage"></h2>
+                    <div class="score-circle" id="scoreCircle">
+                        <span id="scorePercent"></span>
+                    </div>
+                    <div class="results-detail">
+                        <p style="font-size: 18px; color: #666;">
+                            You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                        </p>
+                    </div>
+                    <div id="badgeSection"></div>
+                    <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "According to the module, what is the PRIMARY reason chain-of-thought prompting produces more accurate results on complex problems?",
+                options: [
+                    "It uses more advanced AI models that have better reasoning capabilities",
+                    "When Claude explains its thinking step-by-step, it catches logical errors during the reasoning process",
+                    "Chain-of-thought prompts are longer, which gives Claude more context to work with",
+                    "It automatically validates answers against multiple sources before responding"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! The module states: 'Why it works: When Claude explains its thinking, it catches logical errors and produces more accurate results.' The benefit comes from making reasoning explicit, not from model selection or prompt length.",
+                    incorrect: "Review Part 1: Advanced Prompting Techniques, Technique 1: Chain-of-Thought Prompting. The module explains: 'When Claude explains its thinking, it catches logical errors and produces more accurate results.' It's about showing the work, which allows Claude to self-correct during reasoning, not about using different models or longer prompts."
+                }
+            },
+            {
+                question: "You need to train Claude to format weekly status updates in a very specific way with particular sections and formatting. You'll be doing this every week. The module provides guidance on which technique to use. What should you do?",
+                options: [
+                    "Use chain-of-thought prompting each week to ensure consistent reasoning about what to include",
+                    "Write detailed instructions in Custom Instructions so it applies to all your conversations",
+                    "Create a few-shot prompt with 2-3 example status updates showing the exact format, then save it as a Skill for reuse",
+                    "Create a new Project for status updates and upload previous examples as reference documents"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module states under few-shot: 'When to use: Formatting requirements are complex, You have a specific style or structure, You'll reuse this format multiple times.' Then it says: 'Pro tip: Save good few-shot prompts. Turn them into Skills (Module 1) for reuse.' This is exactly that scenario.",
+                    incorrect: "Review Part 1, Technique 2: Few-Shot Examples. The module says: 'When to use few-shot: Formatting requirements are complex, You have a specific style or structure, You'll reuse this format multiple times.' The pro tip states: 'Save good few-shot prompts. Turn them into Skills for reuse.' Custom Instructions are for general preferences, not specific formatting tasks."
+                }
+            },
+            {
+                question: "You enable the Slack connector in Claude. According to the module's privacy guidance, what can Claude now access?",
+                options: [
+                    "Any Slack channel you're a member of and any direct messages in your workspace, respecting your existing permissions",
+                    "Only public Slack channels that are specifically approved by your IT department",
+                    "All Slack channels in your workspace, including private channels you're not a member of",
+                    "Only Slack channels you explicitly grant permission to during each conversation"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module states: 'When you enable connectors, Claude can access: Any Slack channel you're a member of' and 'Claude respects your existing permissions. It can only see what you already have access to in those systems.' This includes your DMs and channels, but only what you can already see.",
+                    incorrect: "Review Part 2: Connecting to Your Tools, Privacy Note section. The module clearly states: 'Claude can access: Any Slack channel you're a member of' and 'Claude respects your existing permissions. It can only see what you already have access to.' Once enabled, it has access to everything you can see, including DMs, but nothing you can't already access."
+                }
+            },
+            {
+                question: "You have a product requirements document stored on your computer that you need to analyze. The same document also exists in your company's document management system with connectors enabled. According to the module's guidance on when to use connectors vs manual uploads, what should you do?",
+                options: [
+                    "Use the connector to access the live version since it might have recent updates you don't have locally",
+                    "Always prefer connectors over manual uploads because they're more efficient",
+                    "Upload both versions and ask Claude to compare them for differences",
+                    "Upload the local file manually since you have a specific version to analyze and want to ensure Claude uses that exact version"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! The module states under 'Upload manually when:' includes 'You have a specific document to analyze' and 'You want to ensure Claude uses a specific version (not latest).' If you need to analyze a particular version, uploading it directly guarantees Claude uses exactly that file.",
+                    incorrect: "Review Part 2: When to Use Connectors vs. Manual Uploads. The module says: 'Upload manually when: You have a specific document to analyze, You want to ensure Claude uses a specific version (not latest).' If you have the file locally and need to analyze that specific version, upload it. Connectors pull the current/latest version, which might not be what you have."
+                }
+            },
+            {
+                question: "According to the module's strategic guidance, when should you invest time in creating detailed few-shot prompts with multiple examples?",
+                options: [
+                    "For every task you ask Claude to complete to ensure maximum quality",
+                    "For formats you'll use repeatedly like status updates, customer emails, or report templates, but not for one-off tasks",
+                    "Only when chain-of-thought prompting doesn't produce good enough results",
+                    "Whenever you're working in a Project that other team members will use"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly right! The module's Strategic Note states: 'Building few-shot prompts takes effort. Do it for formats you'll use repeatedly (status updates, customer emails, report templates). For one-off tasks, basic prompting is fine.' Invest effort where you'll get repeated value.",
+                    incorrect: "Review Part 1, Technique 2: Few-Shot Examples, specifically the Strategic Note. The module says: 'Building few-shot prompts takes effort. Do it for formats you'll use repeatedly (status updates, customer emails, report templates). For one-off tasks, basic prompting is fine.' Few-shot is about reusable formats, not quality thresholds or Projects."
+                }
+            },
+            {
+                question: "You're synthesizing customer feedback from a document in your knowledge management system, messages from your support team chat channel, and recent support tickets. The module includes a specific warning about this type of work. What is it?",
+                options: [
+                    "Multi-source synthesis requires enabling all connectors simultaneously for accurate results",
+                    "Claude cannot effectively combine information from more than two sources in a single analysis",
+                    "Always verify synthesized information before sharing externally because multi-source synthesis can occasionally blend or misattribute information",
+                    "You should analyze each source separately first, then manually combine the insights yourself"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module includes a Verification Reminder: 'When Claude synthesizes information from multiple sources, verify key claims before sharing externally. Multi-source synthesis can occasionally blend or misattribute information. Always spot-check critical facts.' This is about quality control on multi-source analysis.",
+                    incorrect: "Review Part 3: Working with Complex Documents, Technique 2: Synthesizing Multiple Sources. The module has a warning box: 'Verification Reminder: When Claude synthesizes information from multiple sources, verify key claims before sharing externally. Multi-source synthesis can occasionally blend or misattribute information.' Claude can handle multiple sources, but you need to fact-check."
+                }
+            },
+            {
+                question: "You're working on a quarterly business review. You have a Project with financial data and customer metrics, plus a Skill for your company's brand guidelines. You ask Claude to create a presentation for executives. According to the module's example in Part 1, what happens when you combine these tools?",
+                options: [
+                    "Claude loads the financial data from the Project, applies brand guidelines from the Skill, and creates a branded presentation with accurate data automatically",
+                    "Claude will ask you which tool to prioritize since Projects and Skills can conflict with each other",
+                    "The Skill overrides the Project data and Claude creates a generic branded template without the specific numbers",
+                    "You need to manually tell Claude to use both the Project and Skill or it will only use one"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module's Technique 3 example shows: 'Claude loads Q4 data from Project knowledge, Claude activates Brand Guidelines Skill, Claude combines both to create branded presentation with accurate data.' The power is: 'You're not explaining context OR brand standards. Claude has both automatically.'",
+                    incorrect: "Review Part 1, Technique 3: Combining Skills and Projects. The module states: 'What happens: Claude loads Q4 data from Project knowledge, Claude activates Brand Guidelines Skill, Claude combines both.' The whole point is automatic combination: 'You're not explaining context OR brand standards. Claude has both automatically.' No conflicts, no manual selection needed."
+                }
+            },
+            {
+                question: "According to the module's strategic guidance, when is multi-document synthesis most valuable versus when should you just search one source directly?",
+                options: [
+                    "Multi-document synthesis should be used for all analysis tasks to ensure comprehensive coverage",
+                    "Use multi-document synthesis only when you have fewer than 5 documents to analyze",
+                    "Multi-document synthesis is powerful for high-value analysis like quarterly reviews and strategic planning, but for simple information lookup just search one source directly",
+                    "Always search one source at a time and manually combine insights rather than asking Claude to synthesize"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module's Strategic Note states: 'Multi-document synthesis is powerful for high-value analysis (quarterly reviews, strategic planning, complex research). For simple information lookup, just search one source directly.' Use the powerful technique when it adds value, not for everything.",
+                    incorrect: "Review Part 3: Working with Complex Documents, Technique 2: Synthesizing Multiple Sources, specifically the Strategic Note. The module says: 'Multi-document synthesis is powerful for high-value analysis (quarterly reviews, strategic planning, complex research). For simple information lookup, just search one source directly.' It's about matching the technique to the task complexity and value."
+                }
+            },
+            {
+                question: "You need to analyze current project status across your team. The information exists in your project management system, team chat discussions, and recent email threads. According to the module's connector guidance, what approach should you take?",
+                options: [
+                    "Download all the information manually and upload it to ensure accuracy",
+                    "Only use connectors for this since the information is in connected systems and you need current data",
+                    "Use connectors to pull information from the systems since you need current/live data and want Claude to search across multiple sources",
+                    "Create a Project first, then use connectors to populate it with the information"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module states: 'Use connectors when: Information is in Confluence, Slack, HubSpot, Jira, Microsoft; You need current/live data; You're searching for something but not sure exactly where it is; You want Claude to search across multiple sources.' Your scenario matches all these criteria.",
+                    incorrect: "Review Part 2: When to Use Connectors vs. Manual Uploads. The module says: 'Use connectors when: Information is in Confluence, Slack, HubSpot, Jira, Microsoft, You need current/live data, You want Claude to search across multiple sources.' Your info is in connected systems (project management, chat, email) and you need current data. Connectors are the right tool."
+                }
+            },
+            {
+                question: "The module shows an example of combining Projects, Skills, and Artifacts. According to Part 9's framework, what role does each component play?",
+                options: [
+                    "Projects store conversation history, Skills provide AI capabilities, Artifacts display results",
+                    "Projects contain uploaded files, Skills format outputs, Artifacts validate data quality",
+                    "Projects provide background context, Skills define how to do tasks, Custom Instructions shape communication, Artifacts present outputs",
+                    "Projects enable connectors, Skills control privacy settings, Artifacts organize documents"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! The module explicitly states: 'Each tool has a role: Projects: What's the background and context? Skills: How should I do this task? Custom Instructions: How should I communicate? Artifacts: How should I present the output? Together they create: Contextually aware, properly formatted, brand-compliant outputs.'",
+                    incorrect: "Review Part 9: Projects + Skills + Artifacts = Power, specifically 'Each tool has a role.' The module lists: Projects = background/context, Skills = how to do tasks, Custom Instructions = communication style, Artifacts = output presentation. Each has a distinct purpose, and together they create powerful, contextualized workflows."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 ADVANCED OPERATIVE STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've mastered advanced prompting techniques and understand how to strategically apply chain-of-thought and few-shot examples. You know how to connect Claude to your tools, when to use connectors versus manual uploads, and how to synthesize information from multiple sources. You can now combine Projects, Skills, and Connectors for powerful, context-aware workflows. You're cleared to proceed to Module 6!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 5 and focus on: when and why to use chain-of-thought prompting, creating effective few-shot examples for reusable formats, understanding connector privacy and access, when to use connectors vs manual uploads, verification requirements for multi-source synthesis, and how Projects + Skills + Artifacts work together. Advanced techniques require strategic application!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
