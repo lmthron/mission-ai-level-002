@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 Module 2 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .artifact-types-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .artifact-type-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .artifact-type-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .artifact-type-card p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .artifact-type-card .best-for {
+            color: #7CB342;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .decision-tree {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #4A90E2;
+        }
+
+        .decision-tree h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .decision-item {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .decision-request {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .arrow {
+            color: #4A90E2;
+            font-weight: bold;
+        }
+
+        .decision-type {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .response {
+            color: #666;
+        }
+
+        .artifact {
+            color: #7CB342;
+        }
+
+        .iteration-flow {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .iteration-flow h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border-left: 3px solid #7CB342;
+        }
+
+        .flow-step .step-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .flow-step .step-name {
+            color: #1B365D;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vague-specific {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .vague-specific.bad {
+            border-left: 3px solid #e53935;
+        }
+
+        .vague-specific.good {
+            border-left: 3px solid #7CB342;
+        }
+
+        .vague-specific h4 {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .vague-specific.bad h4 {
+            color: #c62828;
+        }
+
+        .vague-specific.good h4 {
+            color: #558b2f;
+        }
+
+        .vague-specific p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #e53935;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warning-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .warning-box li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border: 2px solid #7CB342;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            color: #558b2f;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .tip-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tip-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            line-height: 1.7;
+            margin-top: 8px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4A90E2, #357abd);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: #7CB342;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            background: #689f38;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 179, 66, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 25px;
+            }
+
+            .artifact-types-grid, .comparison-grid, .flow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📖</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 2 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Claude Artifacts - Interactive Documents</h2>
+                <p>Review these key concepts about Claude Artifacts before taking your Module 2 checkpoint quiz. Understanding artifacts enables you to create standalone, interactive documents and tools that colleagues can actually use.</p>
+            </div>
+
+            <!-- What Are Artifacts -->
+            <div class="concept-section">
+                <div class="concept-title">What Are Claude Artifacts?</div>
+                
+                <div class="concept-box">
+                    <h4>The Simple Explanation</h4>
+                    <p>When you ask Claude for a response, it types in the chat. When you ask Claude to create something (a document, a tool, a visualization), it builds an artifact in a side panel. You see both the conversation AND the thing Claude made.</p>
+                    <p>The conversation is where you discuss what you need. The artifact is the actual deliverable that appears separately.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Four Key Characteristics</h4>
+                    <ul>
+                        <li><strong>Separate and persistent:</strong> Appear in their own panel that stays visible</li>
+                        <li><strong>Interactive:</strong> Can click buttons, fill forms, hover over charts (depending on type)</li>
+                        <li><strong>Shareable:</strong> Easy to export, download, or send to colleagues</li>
+                        <li><strong>Iterative:</strong> Can refine through conversation - Claude updates as you request changes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Artifacts vs Other Features -->
+            <div class="concept-section">
+                <div class="concept-title">Artifacts vs. Other Claude Features</div>
+                
+                <div class="decision-tree">
+                    <h4>Artifacts vs. Regular Responses</h4>
+                    <div class="decision-item">
+                        <div class="decision-request">"Explain how our API works"</div>
+                        <div class="arrow">→</div>
+                        <div class="decision-type response">Regular Response</div>
+                    </div>
+                    <div class="decision-item">
+                        <div class="decision-request">"Create documentation for our API"</div>
+                        <div class="arrow">→</div>
+                        <div class="decision-type artifact">Artifact</div>
+                    </div>
+                    <div class="decision-item">
+                        <div class="decision-request">"What should I include in this report?"</div>
+                        <div class="arrow">→</div>
+                        <div class="decision-type response">Regular Response</div>
+                    </div>
+                    <div class="decision-item">
+                        <div class="decision-request">"Write the Q3 performance report"</div>
+                        <div class="arrow">→</div>
+                        <div class="decision-type artifact">Artifact</div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Artifacts vs. Skills</h4>
+                    <ul>
+                        <li><strong>Skills:</strong> Instructions Claude follows when doing tasks (how to work)</li>
+                        <li><strong>Artifacts:</strong> The actual outputs Claude creates (what Claude makes)</li>
+                        <li><strong>They work together:</strong> A Skill can specify that certain tasks should create artifacts</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Artifacts vs. Projects</h4>
+                    <ul>
+                        <li><strong>Projects:</strong> Workspace with accumulated context and knowledge</li>
+                        <li><strong>Artifacts:</strong> Individual outputs created within (or outside) a project</li>
+                        <li>Projects provide context → Artifacts are deliverables</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Types of Artifacts -->
+            <div class="concept-section">
+                <div class="concept-title">Types of Artifacts and When to Use Each</div>
+                
+                <div class="artifact-types-grid">
+                    <div class="artifact-type-card">
+                        <h4>📝 Markdown (.md)</h4>
+                        <p>Reports, documentation, meeting notes. Formatted text with headers, lists, tables.</p>
+                        <p class="best-for">Best for: Written documents that need structure</p>
+                    </div>
+                    <div class="artifact-type-card">
+                        <h4>🌐 HTML (.html)</h4>
+                        <p>Web pages, dashboards, interactive content. Can include styling, images, basic interactivity.</p>
+                        <p class="best-for">Best for: Presentations, visual displays, simple tools</p>
+                    </div>
+                    <div class="artifact-type-card">
+                        <h4>⚛️ React (.jsx)</h4>
+                        <p>Dynamic, sophisticated web applications. Interactive forms, calculators, data visualizations.</p>
+                        <p class="best-for">Best for: Tools with complex logic, real-time updates</p>
+                    </div>
+                    <div class="artifact-type-card">
+                        <h4>🎨 SVG (.svg)</h4>
+                        <p>Diagrams, charts, logos, illustrations. Scalable vector graphics.</p>
+                        <p class="best-for">Best for: Visual assets, flowcharts, technical diagrams</p>
+                    </div>
+                    <div class="artifact-type-card">
+                        <h4>📊 Mermaid (.mermaid)</h4>
+                        <p>Diagrams and flowcharts from text descriptions. System architectures, workflows, org charts.</p>
+                        <p class="best-for">Best for: Process flows, technical diagrams</p>
+                    </div>
+                    <div class="artifact-type-card">
+                        <h4>💻 Code (various)</h4>
+                        <p>Python, JavaScript, SQL, etc. Actual working code you can run elsewhere.</p>
+                        <p class="best-for">Best for: Scripts, automation, data analysis</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Choosing the Right Type:</strong>
+                    <p>The PRIMARY factor is the level of interactivity and complexity needed. Markdown for formatted text → HTML for basic interactivity → React for complex, dynamic tools.</p>
+                </div>
+            </div>
+
+            <!-- When to Use Artifacts -->
+            <div class="concept-section">
+                <div class="concept-title">When to Use Artifacts</div>
+                
+                <div class="tip-box">
+                    <h4>✅ Use Artifacts When:</h4>
+                    <ul>
+                        <li>You're creating a document someone else will use</li>
+                        <li>The output needs formatting, structure, or interactivity</li>
+                        <li>You want something shareable and standalone</li>
+                        <li>You'll iterate on the same output multiple times</li>
+                        <li>You need to export or download the result</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>❌ Don't Use Artifacts When:</h4>
+                    <ul>
+                        <li>You just need information or advice (regular response is fine)</li>
+                        <li>You're having a back-and-forth conversation (keep it in chat)</li>
+                        <li>The output is very short (a sentence or two)</li>
+                        <li>You're exploring ideas without needing a deliverable</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Iteration Flow -->
+            <div class="concept-section">
+                <div class="concept-title">The 6-Step Iteration Flow</div>
+                
+                <div class="iteration-flow">
+                    <h4>How to Refine Artifacts</h4>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-name">Initial Creation</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-name">Review</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-name">Refine</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-name">Test</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-name">Final Polish</div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">6</div>
+                            <div class="step-name">Export/Share</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Effective Refinement -->
+            <div class="concept-section">
+                <div class="concept-title">Effective Refinement Prompts</div>
+                
+                <div class="comparison-grid">
+                    <div class="vague-specific bad">
+                        <h4>❌ Vague (Don't Do This)</h4>
+                        <p>"Make it better"</p>
+                    </div>
+                    <div class="vague-specific good">
+                        <h4>✓ Specific (Do This)</h4>
+                        <p>"Add a dark mode toggle button in the top right corner"</p>
+                    </div>
+                    <div class="vague-specific bad">
+                        <h4>❌ Vague</h4>
+                        <p>"Fix the colors"</p>
+                    </div>
+                    <div class="vague-specific good">
+                        <h4>✓ Specific</h4>
+                        <p>"Change the primary blue to #031E94 to match our brand"</p>
+                    </div>
+                    <div class="vague-specific bad">
+                        <h4>❌ Vague</h4>
+                        <p>"Add more data"</p>
+                    </div>
+                    <div class="vague-specific good">
+                        <h4>✓ Specific</h4>
+                        <p>"Add a column showing year-over-year growth percentage"</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Pro Tip:</strong>
+                    <p>Make one change at a time for complex artifacts. Multiple simultaneous changes can break things.</p>
+                </div>
+            </div>
+
+            <!-- Common Issues -->
+            <div class="concept-section">
+                <div class="concept-title">Common Issues and Solutions</div>
+                
+                <div class="concept-box">
+                    <h4>Problem 1: Claude Doesn't Create an Artifact</h4>
+                    <p><strong>Cause:</strong> Prompt wasn't explicit enough about creating a deliverable.</p>
+                    <p><strong>Solution:</strong> Say "Please create this as an artifact" or "Create a markdown document" or "Build an HTML page" instead of just "write" or "make."</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Problem 2: HTML Calculator Doesn't Work</h4>
+                    <p><strong>Cause:</strong> Form elements with onsubmit try to submit to a server.</p>
+                    <p><strong>Solution:</strong> Use div containers and button onclick handlers instead of form elements. Tell Claude: "Do not use form elements - use div containers and button onclick handlers."</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Problem 3: React Artifact Won't Run After Download</h4>
+                    <p><strong>Cause:</strong> React artifacts need a web server to run properly.</p>
+                    <p><strong>Solution:</strong> Ask Claude: "Convert this React artifact to plain HTML and JavaScript so it runs locally without a server." This creates a self-contained file that works anywhere.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Problem 4: Artifact Looks Different When Downloaded</h4>
+                    <p><strong>Cause:</strong> Missing external resources or fonts.</p>
+                    <p><strong>Solution:</strong> Tell Claude: "Embed all styles and resources directly in the HTML file. Don't use external links for fonts or images."</p>
+                </div>
+            </div>
+
+            <!-- Saving and Sharing -->
+            <div class="concept-section">
+                <div class="concept-title">Saving and Sharing Artifacts</div>
+                
+                <div class="concept-box">
+                    <h4>To Download</h4>
+                    <ul>
+                        <li>Click the download icon in the artifact panel</li>
+                        <li>Choose the file format (HTML, markdown, etc.)</li>
+                        <li>Save to your computer</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>To Share with Colleagues</h4>
+                    <ul>
+                        <li>Download the artifact</li>
+                        <li>Send via email or messaging</li>
+                        <li>For HTML artifacts: Recipients can open in browser</li>
+                        <li>For React artifacts: May need to convert to HTML first or host on web server</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 HTML Artifacts Work Everywhere</h4>
+                    <ul>
+                        <li>Open directly in any web browser (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Upload to websites or hosting services</li>
+                        <li>Send to colleagues who can open locally</li>
+                        <li>Embed in SharePoint, Confluence, or other platforms</li>
+                        <li>No special setup required - they just work</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Artifacts are standalone, interactive outputs separate from chat responses. Choose the right type based on complexity needs (Markdown → HTML → React). Iterate with specific refinement requests. Avoid form elements in HTML calculators. Convert React to HTML for easy sharing. Make one change at a time on complex artifacts.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed Claude Artifacts fundamentals. Now demonstrate your understanding and earn Technical Officer status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-002/module2-quiz.html" class="quiz-button">Take Module 2 Quiz</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
