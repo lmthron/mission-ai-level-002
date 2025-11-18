@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 Module 3 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .format-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .format-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .format-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .format-card .best-for {
+            color: #7CB342;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .format-card .avoid {
+            color: #e53935;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vague-specific {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .vague-specific.bad {
+            border-left: 3px solid #e53935;
+        }
+
+        .vague-specific.good {
+            border-left: 3px solid #7CB342;
+        }
+
+        .vague-specific h4 {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .vague-specific.bad h4 {
+            color: #c62828;
+        }
+
+        .vague-specific.good h4 {
+            color: #558b2f;
+        }
+
+        .vague-specific p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #e53935;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warning-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .warning-box li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border: 2px solid #7CB342;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            color: #558b2f;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .tip-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tip-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .workflow-steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #4A90E2;
+        }
+
+        .workflow-steps h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid #7CB342;
+        }
+
+        .workflow-step .step-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .workflow-step .step-name {
+            color: #1B365D;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .workflow-step .step-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #1B365D;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .error-examples {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .error-examples h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .error-example {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 3px solid #e53935;
+        }
+
+        .error-example .error-label {
+            color: #c62828;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .error-example .error-fix {
+            color: #558b2f;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .error-example code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📊</div>
+            <h1>Level 002 - Module 3 Review</h1>
+            <p class="subtitle">Structured Outputs and Data Formats</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Quick Reference Guide</h2>
+                <p>This guide summarizes the key concepts from Module 3: how to get Claude to produce structured data, when to use different formats, and how to connect AI-generated data to your workflows.</p>
+            </div>
+
+            <!-- Core Concept -->
+            <div class="concept-section">
+                <div class="concept-title">What is Structured Data?</div>
+                
+                <div class="concept-box">
+                    <h4>The Core Concept</h4>
+                    <p>Structured data is information organized in a predictable, consistent format that computers can easily parse and process.</p>
+                    <p><strong>The Key Difference:</strong> Human-readable reports use paragraphs and formatting. Machine-readable data uses consistent, parseable formats.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why This Matters</h4>
+                    <p>Without structured outputs, AI is just a writing tool.</p>
+                    <p>With structured outputs, AI becomes a data generation system that connects to your actual workflows.</p>
+                    <ul>
+                        <li>Import into Excel or databases</li>
+                        <li>Sort, filter, and analyze</li>
+                        <li>Feed into other systems automatically</li>
+                        <li>Validate for completeness and accuracy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- The Three Formats -->
+            <div class="concept-section">
+                <div class="concept-title">The Three Main Formats</div>
+                
+                <div class="format-comparison">
+                    <div class="format-card">
+                        <h4>📄 CSV</h4>
+                        <p>Simple text format where commas separate fields. Each line is a record.</p>
+                        <span class="best-for">Best for: Excel imports, simple tabular data, data analysis</span>
+                        <span class="avoid">Avoid for: Nested structures, data with commas, API integrations</span>
+                    </div>
+                    <div class="format-card">
+                        <h4>🔧 JSON</h4>
+                        <p>Key-value pairs with support for nested structures. Standard for modern systems.</p>
+                        <span class="best-for">Best for: APIs, configuration files, complex nested data</span>
+                        <span class="avoid">Avoid for: Non-technical users editing manually, simple flat data for Excel</span>
+                    </div>
+                    <div class="format-card">
+                        <h4>📋 XML</h4>
+                        <p>Markup language with tags. Less common in modern workflows.</p>
+                        <span class="best-for">Best for: Legacy systems, SOAP APIs, specific system requirements</span>
+                        <span class="avoid">Avoid for: New projects (use JSON), simple data (use CSV)</span>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Quick Decision Rule:</strong>
+                    <p>Going into Excel? Use CSV. Going into an API or code? Use JSON. System specifically requires XML? Use XML (but confirm it's truly needed).</p>
+                </div>
+            </div>
+
+            <!-- Getting Claude to Produce Structured Data -->
+            <div class="concept-section">
+                <div class="concept-title">Getting Claude to Produce Structured Data</div>
+                
+                <div class="concept-box">
+                    <h4>The Three Essential Steps</h4>
+                    <ul>
+                        <li><strong>Step 1:</strong> Specify the format explicitly (CSV, JSON, XML)</li>
+                        <li><strong>Step 2:</strong> Define the structure clearly (column names, data types, formatting rules)</li>
+                        <li><strong>Step 3:</strong> Give examples when structure is complex</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="vague-specific bad">
+                        <h4>❌ Bad Prompt</h4>
+                        <p>Generate some customer data</p>
+                    </div>
+                    <div class="vague-specific good">
+                        <h4>✓ Good Prompt</h4>
+                        <p>Generate 10 sample customer records in CSV format with these columns: customer_id, customer_name, email, company, signup_date</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tips for Better Prompts</h4>
+                    <ul>
+                        <li>Specify number formats: "2 decimal places" or "whole numbers only"</li>
+                        <li>Define date formats: "YYYY-MM-DD" is standard and sorts correctly</li>
+                        <li>Clarify data types: "numbers not in quotes" for JSON</li>
+                        <li>Request realistic data: "realistic but fake names and emails"</li>
+                        <li>Ask for downloadable files: "Create as a downloadable CSV file"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Validation -->
+            <div class="concept-section">
+                <div class="concept-title">Validation: Catching Errors Before Import</div>
+                
+                <div class="concept-box">
+                    <h4>Why Validate CSV</h4>
+                    <p>Validation ensures your CSV structure is consistent so systems can import it correctly. It checks if every row has the same number of fields, if values with commas are properly escaped, and if the date format is consistent.</p>
+                    <p><strong>What validation does NOT check:</strong> Whether your data is accurate or meets business rules.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>CSV Validation Methods</h4>
+                    <ul>
+                        <li><strong>Method 1:</strong> Import into Excel and verify columns align properly</li>
+                        <li><strong>Method 2:</strong> Upload to Claude and ask it to check for errors</li>
+                        <li><strong>Method 3:</strong> Open in text editor and scan for inconsistent commas</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why Validate JSON</h4>
+                    <p>Validation checks if your JSON syntax is correct so systems can parse it. It verifies all brackets are matched, commas are in the right places, and strings are properly quoted.</p>
+                    <p><strong>What validation does NOT check:</strong> Whether values make business sense or field names match expectations.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>JSON Validation Methods</h4>
+                    <ul>
+                        <li><strong>Method 1:</strong> Use JSONLint.com to check syntax</li>
+                        <li><strong>Method 2:</strong> Upload to Claude and ask it to validate structure</li>
+                        <li><strong>Method 3:</strong> Use Python's json.load() if you code</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Common Errors -->
+            <div class="concept-section">
+                <div class="concept-title">Common Errors and Fixes</div>
+                
+                <div class="error-examples">
+                    <h4>CSV Errors</h4>
+                    
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Commas in data break structure</div>
+                        <p>Problem: <code>Joe's Coffee, Bakery,15.50</code> creates extra column</p>
+                        <div class="error-fix">✓ Fix: Wrap in quotes <code>"Joe's Coffee, Bakery",15.50</code></div>
+                    </div>
+
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Inconsistent number of columns</div>
+                        <p>Problem: Some rows missing fields</p>
+                        <div class="error-fix">✓ Fix: Include empty values, ensure every row has same field count</div>
+                    </div>
+
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Date format inconsistency</div>
+                        <p>Problem: Mix of 01/15/2024, 2024-01-16, Jan 17, 2024</p>
+                        <div class="error-fix">✓ Fix: Use consistent format, prefer YYYY-MM-DD</div>
+                    </div>
+                </div>
+
+                <div class="error-examples">
+                    <h4>JSON Errors</h4>
+                    
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Missing comma between objects</div>
+                        <p>Problem: <code>{"id": 1} {"id": 2}</code></p>
+                        <div class="error-fix">✓ Fix: Add comma <code>{"id": 1}, {"id": 2}</code></div>
+                    </div>
+
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Trailing comma after last item</div>
+                        <p>Problem: <code>{"name": "Alice", "email": "alice@example.com",}</code></p>
+                        <div class="error-fix">✓ Fix: Remove trailing comma</div>
+                    </div>
+
+                    <div class="error-example">
+                        <div class="error-label">❌ Error: Numbers as strings</div>
+                        <p>Problem: <code>{"amount": "150.00", "quantity": "5"}</code></p>
+                        <div class="error-fix">✓ Fix: Remove quotes from numbers <code>{"amount": 150.00, "quantity": 5}</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">The 5-Step Workflow Pattern</div>
+                
+                <div class="workflow-steps">
+                    <h4>Connecting AI Output to Business Processes</h4>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number">Step 1</div>
+                        <div class="step-name">Define Requirements</div>
+                        <div class="step-desc">What format does the destination system need? What fields are required?</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 2</div>
+                        <div class="step-name">Generate with Claude</div>
+                        <div class="step-desc">Get structured data in the required format with proper specifications</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 3</div>
+                        <div class="step-name">Validate</div>
+                        <div class="step-desc">Check for syntax errors and structural consistency</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 4</div>
+                        <div class="step-name">Import/Use</div>
+                        <div class="step-desc">Load into target system (Excel, database, API, etc.)</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 5</div>
+                        <div class="step-name">Verify</div>
+                        <div class="step-desc">Confirm data imported correctly and is usable</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Critical Point:</strong>
+                    <p>You must know the target system's requirements BEFORE generating data. Don't generate first and hope it works.</p>
+                </div>
+            </div>
+
+            <!-- Format Decision Framework -->
+            <div class="concept-section">
+                <div class="concept-title">Format Decision Framework</div>
+                
+                <div class="concept-box">
+                    <h4>Start Here: What's the Destination?</h4>
+                    <ul>
+                        <li><strong>Going into Excel/Google Sheets?</strong> → Use CSV</li>
+                        <li><strong>Going into a database or API?</strong> → Use JSON</li>
+                        <li><strong>Legacy system specifically requires XML?</strong> → Use XML (confirm first)</li>
+                        <li><strong>Non-technical users need to edit it?</strong> → Use CSV</li>
+                        <li><strong>Data has nested structures?</strong> → Use JSON</li>
+                        <li><strong>Simple flat data (no nesting)?</strong> → Use CSV</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>✅ When to Use CSV</h4>
+                    <ul>
+                        <li>Importing into Excel or Google Sheets</li>
+                        <li>Simple tabular data (rows and columns)</li>
+                        <li>Data analysis and reporting</li>
+                        <li>Non-technical people need to view/edit</li>
+                        <li>Flat data structures (no nested relationships)</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>✅ When to Use JSON</h4>
+                    <ul>
+                        <li>API requests and responses</li>
+                        <li>Configuration files for applications</li>
+                        <li>Complex nested data structures</li>
+                        <li>Data consumed by code/systems</li>
+                        <li>Need to preserve data types (numbers, true/false)</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ About XML</h4>
+                    <p>XML is less common in modern workflows. Only use it if:</p>
+                    <ul>
+                        <li>A system specifically requires XML format</li>
+                        <li>Working with legacy enterprise software</li>
+                        <li>Dealing with SOAP APIs (older standard)</li>
+                    </ul>
+                    <p><strong>If you don't know if you need XML, you probably don't.</strong> Focus on CSV and JSON.</p>
+                </div>
+            </div>
+
+            <!-- Advanced Tips -->
+            <div class="concept-section">
+                <div class="concept-title">Advanced Techniques</div>
+                
+                <div class="concept-box">
+                    <h4>Generate Realistic Patterns</h4>
+                    <p>Instead of uniform random data, specify realistic distributions:</p>
+                    <ul>
+                        <li>70% of transactions between $20-$100 (typical purchases)</li>
+                        <li>20% of transactions between $100-$300 (larger purchases)</li>
+                        <li>10% of transactions between $300-$1000 (bulk/premium)</li>
+                    </ul>
+                    <p><strong>Why this matters:</strong> Test data that reflects real patterns catches more issues than uniform random data.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Generate Related Data Across Files</h4>
+                    <p>For complex testing, generate multiple related datasets:</p>
+                    <ul>
+                        <li>File 1: Customer records with customer IDs</li>
+                        <li>File 2: Orders referencing those customer IDs</li>
+                        <li>File 3: Order items referencing the order IDs</li>
+                    </ul>
+                    <p>This maintains referential integrity across your test data.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Incremental Generation for Large Datasets</h4>
+                    <p>For very large datasets, generate in batches:</p>
+                    <ul>
+                        <li>First prompt: "Generate records 1-50, start IDs at TXN0001"</li>
+                        <li>Second prompt: "Continue with records 51-100, start at TXN0051"</li>
+                        <li>Final prompt: "Combine both batches into single file"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Structured data transforms AI from a writing tool into a data generation system. Always specify format explicitly (CSV/JSON/XML), define structure clearly (columns, data types, formatting), and validate before importing. Use CSV for Excel, JSON for APIs and configuration, XML only when specifically required. Follow the 5-step workflow: Define Requirements → Generate → Validate → Import → Verify.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed structured data fundamentals. Now demonstrate your understanding and earn Signals Intelligence Officer status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-002/module3-quiz.html" class="quiz-button">Take Module 3 Quiz</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
