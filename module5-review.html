@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 Module 5 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vague-specific {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .vague-specific.bad {
+            border-left: 3px solid #e53935;
+        }
+
+        .vague-specific.good {
+            border-left: 3px solid #7CB342;
+        }
+
+        .vague-specific h4 {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .vague-specific.bad h4 {
+            color: #c62828;
+        }
+
+        .vague-specific.good h4 {
+            color: #558b2f;
+        }
+
+        .vague-specific p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .vague-specific code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #e53935;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warning-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .warning-box li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border: 2px solid #7CB342;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            color: #558b2f;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .tip-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tip-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #1B365D;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .technique-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .technique-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .technique-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .technique-card .when {
+            color: #558b2f;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .technique-card .avoid {
+            color: #c62828;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .connector-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .connector-list h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .connector-item {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .connector-item strong {
+            color: #1B365D;
+            font-size: 14px;
+        }
+
+        .connector-item p {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>Level 002 - Module 5 Review</h1>
+            <p class="subtitle">Advanced Techniques and Integrations</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Quick Reference Guide</h2>
+                <p>This guide summarizes the key concepts from Module 5: advanced prompting techniques (chain-of-thought and few-shot), connecting Claude to your tools through connectors, and working with complex multi-document analysis.</p>
+            </div>
+
+            <!-- Advanced Prompting Techniques -->
+            <div class="concept-section">
+                <div class="concept-title">Advanced Prompting Techniques</div>
+                
+                <div class="technique-cards">
+                    <div class="technique-card">
+                        <h4>🧠 Chain-of-Thought</h4>
+                        <p>Asking Claude to show its reasoning step-by-step before giving the final answer.</p>
+                        <p><strong>Why it works:</strong> When Claude explains its thinking, it catches logical errors and produces more accurate results.</p>
+                        <span class="when">Use for: Complex decisions, technical problem-solving, strategic planning</span>
+                        <span class="avoid">Avoid for: Routine tasks where reasoning doesn't add value</span>
+                    </div>
+                    <div class="technique-card">
+                        <h4>📋 Few-Shot Examples</h4>
+                        <p>Showing Claude 2-3 examples of what you want before asking for the real output.</p>
+                        <p><strong>Why it works:</strong> Examples are clearer than descriptions. Claude learns your exact format and style.</p>
+                        <span class="when">Use for: Complex formatting, specific style/structure, formats you'll reuse</span>
+                        <span class="avoid">Avoid for: One-off tasks, simple requests</span>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Chain-of-Thought Template</h4>
+                    <p>Simple trigger phrase: Add <strong>"Think through this step-by-step:"</strong> to your prompt.</p>
+                    <p style="margin-top: 10px;">Example: "We need to decide between Feature A and Feature B. Think through this step-by-step: 1. What are the business impacts? 2. What are the technical complexities? 3. What are the resource requirements? Then recommend which to prioritize."</p>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Strategic Use:</strong>
+                    <p>Chain-of-thought and few-shot take more time and tokens. Use them when quality matters most, not for every task. Save chain-of-thought for important decisions. Save few-shot prompts as Skills for formats you'll reuse repeatedly.</p>
+                </div>
+            </div>
+
+            <!-- Connectors -->
+            <div class="concept-section">
+                <div class="concept-title">Connecting to Your Tools</div>
+                
+                <div class="concept-box">
+                    <h4>What Are Connectors?</h4>
+                    <p>Connectors allow Claude to access information from your systems directly. Instead of downloading and uploading documents, Claude can search your tools, read pages, and reference current information.</p>
+                    <p style="margin-top: 10px;"><strong>Examples of available connectors:</strong> Slack (search messages, read channels), Microsoft 365 (access files, search emails), HubSpot (search CRM data), and others depending on your organization's setup.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="vague-specific good">
+                        <h4>✅ Use Connectors When:</h4>
+                        <p>• Information is in connected systems</p>
+                        <p>• You need current/live data</p>
+                        <p>• You're searching but not sure where it is</p>
+                        <p>• You want Claude to search multiple sources</p>
+                    </div>
+                    <div class="vague-specific bad">
+                        <h4>✗ Upload Manually When:</h4>
+                        <p>• File is on your computer</p>
+                        <p>• You have a specific document to analyze</p>
+                        <p>• Document isn't in connected system</p>
+                        <p>• You want to ensure specific version used</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important Privacy Considerations</h4>
+                    <p>When you enable connectors, Claude can access anything you have permission to see in those systems. For example:</p>
+                    <ul>
+                        <li>Any chat channels you're a member of (including direct messages)</li>
+                        <li>Any documents or pages you can read in your knowledge systems</li>
+                        <li>Any CRM data you have access to</li>
+                        <li>Any project management issues you can see</li>
+                        <li>Any files and emails in your productivity systems</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-weight: 600;">Claude respects your existing permissions but CAN access this data once enabled. Review what's in your systems before enabling connectors.</p>
+                </div>
+            </div>
+
+            <!-- Multi-Document Analysis -->
+            <div class="concept-section">
+                <div class="concept-title">Working with Complex Documents</div>
+                
+                <div class="concept-box">
+                    <h4>Three Key Techniques</h4>
+                    <p><strong>1. Comparing Documents:</strong> Upload two versions and ask what changed, what was added, what was removed.</p>
+                    <p><strong>2. Synthesizing Multiple Sources:</strong> Pull information from different systems (Confluence doc + Slack messages + support tickets) for integrated analysis.</p>
+                    <p><strong>3. Building Document Libraries:</strong> Create a Project with core docs, then use connectors to pull additional context as needed.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Citation and Source Tracking</h4>
+                    <p>When working with multiple documents, ask Claude to cite sources:</p>
+                    <p style="font-family: 'Courier New', monospace; background: white; padding: 10px; border-radius: 4px; margin-top: 10px;">"Analyze these 5 customer feedback documents. For each insight you provide, tell me which document it came from."</p>
+                    <p style="margin-top: 10px;"><strong>Why this matters:</strong> You can verify claims and go back to the source if needed.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Verification Requirement</h4>
+                    <p>When Claude synthesizes information from multiple sources, verify key claims before sharing externally. Multi-source synthesis can occasionally blend or misattribute information. Always spot-check critical facts.</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Strategic Use of Multi-Document Analysis</h4>
+                    <ul>
+                        <li><strong>Use for high-value analysis:</strong> Quarterly reviews, strategic planning, complex research</li>
+                        <li><strong>Use simpler approaches for:</strong> Simple information lookup (just search one source)</li>
+                        <li>Match the technique complexity to the task value</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Combining Everything -->
+            <div class="concept-section">
+                <div class="concept-title">Combining Tools for Powerful Workflows</div>
+                
+                <div class="concept-box">
+                    <h4>Projects + Skills + Connectors</h4>
+                    <p>Each tool has a distinct role:</p>
+                    <ul>
+                        <li><strong>Projects:</strong> "What's the background and context?"</li>
+                        <li><strong>Skills:</strong> "How should I do this task?"</li>
+                        <li><strong>Custom Instructions:</strong> "How should I communicate?"</li>
+                        <li><strong>Artifacts:</strong> "How should I present the output?"</li>
+                        <li><strong>Connectors:</strong> "What current information do I need from our systems?"</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Example Workflow</h4>
+                    <p><strong>Setup:</strong></p>
+                    <ul>
+                        <li>Project: "Q4 Business Review" with financial data and metrics</li>
+                        <li>Skill: Brand Guidelines for formatting</li>
+                        <li>Connectors: Enabled for your knowledge management and team chat systems</li>
+                        <li>Custom Instructions: Your communication preferences</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Prompt in Project:</strong> "Create a Q4 business review presentation for executives. Pull the latest product roadmap from our knowledge system. Use our brand guidelines."</p>
+                    <p style="margin-top: 15px;"><strong>What happens:</strong></p>
+                    <ul>
+                        <li>Claude loads Q4 data from Project</li>
+                        <li>Claude pulls current roadmap via connector</li>
+                        <li>Claude activates Brand Guidelines Skill</li>
+                        <li>Claude applies your Custom Instructions</li>
+                        <li>Claude creates branded Artifact with current data</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-weight: 600; color: #558b2f;">Result: Contextually aware, properly formatted, brand-compliant presentation with current data</p>
+                </div>
+            </div>
+
+            <!-- Reusable Templates -->
+            <div class="concept-section">
+                <div class="concept-title">Building Reusable Prompt Templates</div>
+                
+                <div class="concept-box">
+                    <h4>What Are Prompt Templates?</h4>
+                    <p>Fill-in-the-blank prompts for tasks you do repeatedly. Create once, reuse many times.</p>
+                    <p style="margin-top: 15px;"><strong>Example Template Structure:</strong></p>
+                    <p style="font-family: 'Courier New', monospace; background: white; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        Write a response to this customer email about [ISSUE].<br><br>
+                        Context:<br>
+                        - Customer tier: [Enterprise/Pro/Standard]<br>
+                        - Issue severity: [Critical/High/Medium/Low]<br>
+                        - Our fault: [Yes/No]<br><br>
+                        Tone: [Empathetic/Professional/Technical]<br><br>
+                        Include: acknowledgment, explanation, fix plan, timeline, next steps
+                    </p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tip: Turn Templates into Skills</h4>
+                    <ul>
+                        <li>Save your best templates as Skills</li>
+                        <li>Claude will use them automatically when relevant</li>
+                        <li>No need to paste the template each time</li>
+                        <li>Team members can use the same Skill for consistency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- When to Use What -->
+            <div class="concept-section">
+                <div class="concept-title">Decision Framework: When to Use Each Technique</div>
+                
+                <div class="comparison-grid">
+                    <div class="vague-specific good">
+                        <h4>Use Chain-of-Thought When:</h4>
+                        <p>• Complex decisions with multiple factors</p>
+                        <p>• Technical problem-solving</p>
+                        <p>• Strategic planning</p>
+                        <p>• You need to see the reasoning</p>
+                        <p>• The decision is important</p>
+                    </div>
+                    <div class="vague-specific bad">
+                        <h4>Don't Use Chain-of-Thought For:</h4>
+                        <p>• Routine, straightforward tasks</p>
+                        <p>• Simple formatting requests</p>
+                        <p>• Quick information lookup</p>
+                        <p>• When speed matters more than reasoning</p>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="vague-specific good">
+                        <h4>Invest in Few-Shot When:</h4>
+                        <p>• Complex formatting requirements</p>
+                        <p>• Specific style or structure needed</p>
+                        <p>• You'll use this format repeatedly</p>
+                        <p>• Quality and consistency are critical</p>
+                    </div>
+                    <div class="vague-specific bad">
+                        <h4>Skip Few-Shot For:</h4>
+                        <p>• One-off tasks</p>
+                        <p>• Simple, self-explanatory formats</p>
+                        <p>• When basic prompting works fine</p>
+                        <p>• Tasks you won't repeat</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Advanced techniques (chain-of-thought, few-shot) produce better results but require more effort. Use strategically for important work, not routine tasks. Connectors give Claude live access to your business systems (for example: team chat, document management, CRM, project tracking, email) but respect your existing permissions. Multi-document synthesis is powerful for high-value analysis but requires fact-checking. Combine Projects (context) + Skills (procedures) + Connectors (live data) + Artifacts (outputs) for maximum impact.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed advanced techniques and integrations. Now demonstrate your understanding and earn Advanced Operative status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-002/module5-quiz.html" class="quiz-button">Take Module 5 Quiz</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
