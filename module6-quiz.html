@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 - Module 6 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .results-content {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #558b2f);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .score-circle::after {
+            content: '%';
+            font-size: 24px;
+            margin-left: 5px;
+        }
+
+        .results-detail {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-earned h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .start-screen p {
+            color: #666;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .mission-briefing {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .mission-briefing h3 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .mission-briefing ul {
+            list-style: none;
+            padding: 0;
+            color: #555;
+        }
+
+        .mission-briefing li {
+            padding: 6px 0;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .mission-briefing li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📊</div>
+            <h1>MISSION AI: LEVEL 002</h1>
+            <p class="subtitle">Module 6 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Data Analysis Intelligence Mission</h2>
+                <p>You've learned how to use Claude for data analysis without coding: generating Excel formulas, cleaning messy data, detecting patterns, planning visualizations, and building complete analysis workflows. This checkpoint tests your understanding of practical data analysis techniques.</p>
+                
+                <div class="mission-briefing">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li>10 questions covering data analysis fundamentals</li>
+                        <li>Focus on formula generation, data cleaning, and pattern detection</li>
+                        <li>You must score 90% or higher to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of conversational data analysis</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">Begin Mission</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <div class="results-content">
+                    <h2 id="resultMessage"></h2>
+                    <div class="score-circle" id="scoreCircle">
+                        <span id="scorePercent"></span>
+                    </div>
+                    <div class="results-detail">
+                        <p style="font-size: 18px; color: #666;">
+                            You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                        </p>
+                    </div>
+                    <div id="badgeSection"></div>
+                    <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "You need Claude to generate an Excel formula for calculating total revenue from active customers in the Enterprise tier. According to the module's guidance on describing your needs, what should you include in your prompt?",
+                options: [
+                    "The business reason why you need this calculation and what decision it will inform",
+                    "Sample data showing a few rows so Claude understands the data format and values",
+                    "Your column layout, what to calculate, the conditions to apply, and where the result should go",
+                    "The expected result so Claude can work backwards to determine the correct formula"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module states under 'How to Describe Your Need': 'Good description includes: 1. Column layout: What's in columns A, B, C, etc. 2. What to calculate: Sum, average, count, etc. 3. Conditions: What criteria to apply 4. Where the result goes: Which cell or range.'",
+                    incorrect: "Review Part 2: Getting Claude to Generate Excel Formulas, 'How to Describe Your Need.' The module lists four essential elements: column layout (what's in each column), what to calculate (sum, average, etc.), conditions (criteria to apply), and where the result goes (which cell). These are the technical requirements Claude needs, not business context or expected results."
+                }
+            },
+            {
+                question: "You have a column with inconsistent phone number formatting: some with dashes (555-1234), some with parentheses ((555) 1234), some with just numbers. According to the module's data transformation workflow, what's the correct approach?",
+                options: [
+                    "Explain the inconsistency to Claude, get the formula solution, test it on 5-10 rows, then apply to the full dataset after verification",
+                    "Use Excel's Find and Replace feature to manually remove all dashes and parentheses yourself",
+                    "Ask Claude to generate sample data with correct formatting, then replace your column with the generated data",
+                    "Sort the data by phone number format, fix each group separately, then combine them back together"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Perfect! The module's Data Transformation Workflow states: 'Step 2: Explain what's wrong,' 'Step 3: Get Claude's solution' (formula and instructions), 'Step 4: Test on a few rows - Don't apply to entire dataset immediately. Test on 5-10 rows first,' 'Step 5: Verify and apply to full dataset.'",
+                    incorrect: "Review Part 3: Data Cleaning and Transformation, 'Data Transformation Workflow.' The systematic approach is: explain the problem to Claude, get the formula solution, test on 5-10 rows first (critical step), verify it works, then apply to all data. This prevents applying a broken formula to your entire dataset."
+                }
+            },
+            {
+                question: "You upload sales data to Claude and ask it to identify trends. Claude reports that 'Sales increased 47% in March compared to February, with the Electronics category showing the strongest growth at 83%.' According to the module's guidance on verification, what should you do?",
+                options: [
+                    "Trust the analysis since Claude calculated it from your actual data",
+                    "Ask Claude to show the exact formulas it used so you can verify the calculation methodology",
+                    "Re-upload the data and ask Claude to analyze it again to confirm the same results",
+                    "Spot-check the key claims by manually verifying a few calculations in Excel before sharing the insights"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! The module's Pitfall 3: Blindly Trusting Results states: 'Solution: Spot-check formulas on a few rows manually, Verify totals make sense, Ask Claude to explain any surprising findings.' Always verify before sharing, especially surprising numbers like 83% growth.",
+                    incorrect: "Review Part 6: Common Pitfalls and How to Avoid Them, Pitfall 3: Blindly Trusting Results. The module says: 'Problem: You don't verify Claude's calculations. Solution: Spot-check formulas on a few rows manually, Verify totals make sense, Compare to previous reports if available.' AI can make calculation errors, so verify before sharing."
+                }
+            },
+            {
+                question: "You have quarterly revenue data you want to visualize. You're not sure whether to use a bar chart, line chart, or pie chart. According to the module's guidance, what should you ask Claude?",
+                options: [
+                    "Ask Claude to create the visualization for you as an artifact so you can see which looks best",
+                    "Describe your data structure and ask Claude to recommend the best chart type for showing trends over time and explain why",
+                    "Upload the data and ask Claude to create all three chart types so you can compare them",
+                    "Ask Claude to generate a pivot table first, then decide on the chart type manually"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! The module's Part 5 states: 'You: I have quarterly revenue data by product category (4 quarters, 5 categories). What chart type should I use to show trends over time? Claude: Line chart would work best here. Here's why...' Claude provides recommendations and reasoning based on your data structure and goals.",
+                    incorrect: "Review Part 5: Creating Visualizations with Claude's Guidance. The module shows: 'Claude doesn't create the actual charts in Excel' but 'Claude guides you on: Which chart type to use, How to set it up, What data to include, Best practices for clarity.' Describe your data and goals, get recommendations and instructions."
+                }
+            },
+            {
+                question: "According to the module, what is a common pitfall when using Claude for data analysis, and how should you avoid it?",
+                options: [
+                    "Using Claude for analysis that's faster to do manually; avoid by checking if explaining to Claude takes longer than doing it yourself",
+                    "Not uploading enough sample data; avoid by always uploading your entire dataset",
+                    "Asking for too many formulas at once; avoid by requesting only one formula per conversation",
+                    "Using Claude for statistical analysis; avoid by learning to code Python instead"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! The module's Pitfall 4: Overcomplicating Simple Tasks states: 'Problem: Using AI for analysis that takes 2 minutes to do manually. Solution: Is this repetitive? Will explaining to Claude take longer? High value task?' Don't use AI for everything, use it strategically.",
+                    incorrect: "Review Part 6: Common Pitfalls, Pitfall 4: Overcomplicating Simple Tasks. The module says: 'Problem: Using AI for analysis that takes 2 minutes to do manually' and provides the decision framework: 'Is this repetitive? Will explaining to Claude take longer? High value task?' Use AI strategically, not for every small task."
+                }
+            },
+            {
+                question: "You're analyzing customer data and notice that sales amounts in Column C have some values stored as text (with dollar signs) and some as numbers. You ask Claude how to fix this. What type of solution will Claude provide according to the module?",
+                options: [
+                    "Claude will provide a formula to convert text to numbers and step-by-step instructions on where to put it and how to copy it down",
+                    "Claude will automatically clean the data and return a corrected CSV file",
+                    "Claude will create a Python script that you run to fix the data",
+                    "Claude will tell you to manually find and replace the dollar signs using Excel's Find & Replace feature"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Perfect! The module's Data Transformation Workflow states: 'Step 3: Get Claude's solution - Claude will provide: Formula to apply, Step-by-step instructions, Where to put the formula, How to copy it down.' Claude gives you the Excel formula and instructions, not code or manual processes.",
+                    incorrect: "Review Part 3: Data Cleaning and Transformation, specifically 'Data Transformation Workflow.' The module says Claude provides: 'Formula to apply, Step-by-step instructions, Where to put the formula, How to copy it down.' Claude helps you use Excel's formula capabilities, not Python scripts or manual find/replace."
+                }
+            },
+            {
+                question: "The module shows how to combine Module 3 (Structured Outputs) with Module 6 (Data Analysis). What is the complete workflow described?",
+                options: [
+                    "Generate structured data in Excel, export as CSV, upload to Claude for analysis, then import results back to Excel",
+                    "Use Claude to analyze existing data, generate insights as structured output, then create new datasets based on findings",
+                    "Create a Project with data files, use Skills for analysis procedures, generate visualizations as Artifacts",
+                    "Generate data with Claude following Module 3 techniques, import into Excel, then use Claude to create analysis formulas for that data"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! The module's Part 8 states: 'Step 1: Generate test data [Follow Module 3 techniques], Step 2: Import into Excel [You know how to do this from Module 3], Step 3: Analyze with Claude [Create formulas for...]' Then it says: 'This is the power of Modules 3 + 6 together: Generate data, then analyze it.'",
+                    incorrect: "Review Part 8: Working with Structured Data from Module 3. The complete workflow is: 'Step 1: Generate test data' using Module 3 CSV techniques, 'Step 2: Import into Excel,' 'Step 3: Analyze with Claude' by getting formulas. The module states: 'This is the power of Modules 3 + 6 together: Generate data, then analyze it.'"
+                }
+            },
+            {
+                question: "The module describes several Excel tasks Claude can help with. Which of these tasks does the module explicitly say Claude CANNOT do?",
+                options: [
+                    "Generating complex formulas with multiple conditions like SUMIFS or AVERAGEIFS",
+                    "Creating the actual charts and visualizations inside your Excel file automatically",
+                    "Providing step-by-step instructions for setting up pivot tables in Excel",
+                    "Recommending which chart type to use based on your data structure and analysis goals"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! The module's Part 5 explicitly states: 'Important: Claude doesn't create the actual charts in Excel (it can't directly manipulate your Excel file).' What Claude DOES do: 'Claude guides you on: Which chart type to use, How to set it up, What data to include, Best practices for clarity.'",
+                    incorrect: "Review Part 5: Creating Visualizations with Claude's Guidance. The module clearly states: 'Important: Claude doesn't create the actual charts in Excel (it can't directly manipulate your Excel file).' Claude can generate formulas, provide pivot table instructions, and recommend chart types, but cannot create actual visualizations in your file. It guides, you execute."
+                }
+            },
+            {
+                question: "You want to create a chart to show quarterly revenue trends over the past year. According to the module, what role does Claude play in creating visualizations?",
+                options: [
+                    "Claude creates the actual chart as an artifact that you can download and insert into Excel",
+                    "Claude generates Python code that creates the visualization which you then run",
+                    "Claude guides you on which chart type to use, how to set it up, what data to include, and best practices for clarity",
+                    "Claude converts your data into a format that Excel's chart wizard can automatically process"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The module's Part 5 states: 'Important: Claude doesn't create the actual charts in Excel (it can't directly manipulate your Excel file).' Instead: 'Claude guides you on: Which chart type to use, How to set it up, What data to include, Best practices for clarity.' Claude is your visualization consultant, not a chart builder.",
+                    incorrect: "Review Part 5: Creating Visualizations with Claude's Guidance. The module clearly states: 'Claude doesn't create the actual charts in Excel' but provides 'guidance on: Which chart type to use, How to set it up, What data to include, Best practices.' Claude recommends and instructs, you create the chart in Excel following that guidance."
+                }
+            },
+            {
+                question: "According to the module's Data Transformation Workflow, you're at Step 3 and Claude has provided you with a formula to fix your date formatting issue. What should you do next?",
+                options: [
+                    "Apply the formula to your entire dataset immediately to save time",
+                    "Test the formula on 5-10 rows first to verify it works correctly before applying to the full dataset",
+                    "Ask Claude to provide an alternative formula approach to compare which works better",
+                    "Save the formula in a Skill so you can reuse it for future date cleaning tasks"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! The module's Data Transformation Workflow states: 'Step 4: Test on a few rows - Don't apply to your entire dataset immediately. Test on 5-10 rows first. Step 5: Verify and apply to full dataset.' Testing first prevents applying a broken formula to all your data.",
+                    incorrect: "Review Part 3: Data Cleaning and Transformation, Data Transformation Workflow. The workflow clearly states: 'Step 4: Test on a few rows. Don't apply to your entire dataset immediately. Test on 5-10 rows first. Step 5: Verify and apply to full dataset.' Always test formulas on a small sample before applying broadly."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 DATA ANALYST STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've mastered data analysis without coding. You understand how to generate Excel formulas through conversation, clean messy datasets systematically, detect patterns in data, plan effective visualizations, and verify AI-generated insights. You can now perform sophisticated analysis using only Claude and Excel. Congratulations on completing Level 002!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 6 and focus on: how to describe data structure for formula generation, the data cleaning workflow (describe, get solution, test small, apply), verification requirements for AI-generated insights, when to use Claude vs manual approaches, how Claude detects patterns, and connecting Module 3 structured data generation with Module 6 analysis. Data analysis is powerful when done correctly!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
