@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 002 Module 6 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vague-specific {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .vague-specific.bad {
+            border-left: 3px solid #e53935;
+        }
+
+        .vague-specific.good {
+            border-left: 3px solid #7CB342;
+        }
+
+        .vague-specific h4 {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .vague-specific.bad h4 {
+            color: #c62828;
+        }
+
+        .vague-specific.good h4 {
+            color: #558b2f;
+        }
+
+        .vague-specific p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .vague-specific code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #e53935;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warning-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .warning-box li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border: 2px solid #7CB342;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            color: #558b2f;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .tip-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tip-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .workflow-steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #4A90E2;
+        }
+
+        .workflow-steps h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid #7CB342;
+        }
+
+        .workflow-step .step-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .workflow-step .step-name {
+            color: #1B365D;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .workflow-step .step-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #1B365D;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .formula-types {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .formula-types h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .formula-category {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .formula-category strong {
+            color: #1B365D;
+            font-size: 14px;
+        }
+
+        .formula-category p {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">📊</div>
+            <h1>Level 002 - Module 6 Review</h1>
+            <p class="subtitle">Data Analysis Without Coding</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Quick Reference Guide</h2>
+                <p>This guide summarizes the key concepts from Module 6: how to use Claude for data analysis without coding, including generating Excel formulas, cleaning messy data, detecting patterns, planning visualizations, and building complete analysis workflows.</p>
+            </div>
+
+            <!-- Core Concept -->
+            <div class="concept-section">
+                <div class="concept-title">Why This Matters</div>
+                
+                <div class="concept-box">
+                    <h4>The Traditional Data Analysis Problem</h4>
+                    <p>You have data in Excel. You need insights. The traditional path requires learning complex formulas, manually cleaning data, figuring out pivot tables, and creating charts by trial and error.</p>
+                    <p style="margin-top: 10px;"><strong>With Claude:</strong> You describe what you want in plain English and get the exact formula, step-by-step cleaning instructions, chart specifications, and pattern analysis.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>What You Can Do Without Coding</h4>
+                    <ul>
+                        <li>Generate formulas for complex calculations</li>
+                        <li>Clean and standardize messy data</li>
+                        <li>Detect patterns and trends</li>
+                        <li>Get guidance on visualization and chart selection</li>
+                        <li>Build complete analysis workflows</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Generating Formulas -->
+            <div class="concept-section">
+                <div class="concept-title">Generating Excel Formulas</div>
+                
+                <div class="concept-box">
+                    <h4>How to Describe Your Need</h4>
+                    <p>A good description includes four elements:</p>
+                    <ul>
+                        <li><strong>Column layout:</strong> What's in columns A, B, C, etc.</li>
+                        <li><strong>What to calculate:</strong> Sum, average, count, etc.</li>
+                        <li><strong>Conditions:</strong> What criteria to apply</li>
+                        <li><strong>Where the result goes:</strong> Which cell or range</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="vague-specific bad">
+                        <h4>❌ Vague Request</h4>
+                        <p>"I need a formula to calculate revenue"</p>
+                    </div>
+                    <div class="vague-specific good">
+                        <h4>✓ Clear Request</h4>
+                        <p>"I have customer data in columns A-E. Column B is Tier, Column C is Revenue, Column E is Status. I need total revenue from Active Enterprise customers in cell F2."</p>
+                    </div>
+                </div>
+
+                <div class="formula-types">
+                    <h4>Common Formula Categories</h4>
+                    <div class="formula-category">
+                        <strong>Conditional Calculations</strong>
+                        <p>SUMIF, AVERAGEIF, COUNTIF (single condition) or SUMIFS, AVERAGEIFS, COUNTIFS (multiple conditions)</p>
+                    </div>
+                    <div class="formula-category">
+                        <strong>Lookups</strong>
+                        <p>VLOOKUP, XLOOKUP - Finding data in other tables; INDEX/MATCH - More flexible lookups</p>
+                    </div>
+                    <div class="formula-category">
+                        <strong>Text Manipulation</strong>
+                        <p>CONCATENATE/CONCAT - Combining text; LEFT, RIGHT, MID - Extracting parts; TRIM, CLEAN - Removing spaces/characters</p>
+                    </div>
+                    <div class="formula-category">
+                        <strong>Date Calculations</strong>
+                        <p>DATEDIF - Time between dates; EOMONTH - End of month; NETWORKDAYS - Business days</p>
+                    </div>
+                    <div class="formula-category">
+                        <strong>Statistical</strong>
+                        <p>MEDIAN, MODE - Central tendency; STDEV, VAR - Variability; PERCENTILE, QUARTILE - Distribution</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Key Point:</strong>
+                    <p>You don't need to memorize formula names. Just describe what you want to calculate and Claude will give you the right formula.</p>
+                </div>
+            </div>
+
+            <!-- Data Cleaning -->
+            <div class="concept-section">
+                <div class="concept-title">Data Cleaning and Transformation</div>
+                
+                <div class="concept-box">
+                    <h4>Common Data Problems</h4>
+                    <ul>
+                        <li><strong>Inconsistent formatting:</strong> Dates in different formats, mixed case text, numbers stored as text</li>
+                        <li><strong>Missing or incomplete data:</strong> Blank cells, placeholder text ("N/A", "TBD")</li>
+                        <li><strong>Duplicate entries:</strong> Same records with slight variations</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-steps">
+                    <h4>Data Transformation Workflow</h4>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number">Step 1</div>
+                        <div class="step-name">Upload or Describe Data</div>
+                        <div class="step-desc">Upload small files or describe structure for larger datasets</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 2</div>
+                        <div class="step-name">Explain What's Wrong</div>
+                        <div class="step-desc">Describe the inconsistency or problem clearly</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 3</div>
+                        <div class="step-name">Get Claude's Solution</div>
+                        <div class="step-desc">Claude provides formula, instructions, where to put it, how to copy down</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 4</div>
+                        <div class="step-name">Test on a Few Rows</div>
+                        <div class="step-desc">Don't apply to entire dataset immediately. Test on 5-10 rows first.</div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">Step 5</div>
+                        <div class="step-name">Verify and Apply to Full Dataset</div>
+                        <div class="step-desc">After confirming it works, apply to all your data</div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical: Always Test First</h4>
+                    <p>Never apply a formula to your entire dataset without testing on a small sample first. A broken formula can corrupt thousands of rows.</p>
+                </div>
+            </div>
+
+            <!-- Pattern Detection -->
+            <div class="concept-section">
+                <div class="concept-title">Detecting Patterns and Trends</div>
+                
+                <div class="concept-box">
+                    <h4>What Claude Looks For</h4>
+                    <ul>
+                        <li>Increases and decreases over time</li>
+                        <li>Outliers (unusually high or low values)</li>
+                        <li>Clusters (groups of similar values)</li>
+                        <li>Correlations (when two things move together)</li>
+                        <li>Seasonality (recurring patterns by time period)</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>How it works:</strong> Claude reads through your data like a human analyst would and describes what stands out based on its training.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>How to Ask for Pattern Analysis</h4>
+                    <p>Upload your data or describe it, then ask:</p>
+                    <ul>
+                        <li>"What trends do you see in this sales data?"</li>
+                        <li>"Are there any outliers or unusual patterns?"</li>
+                        <li>"What correlations exist between these variables?"</li>
+                        <li>"Do you see any seasonal patterns?"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualizations -->
+            <div class="concept-section">
+                <div class="concept-title">Creating Visualizations</div>
+                
+                <div class="concept-box">
+                    <h4>What Claude Does (and Doesn't Do)</h4>
+                    <p><strong>Claude DOES NOT:</strong> Create the actual charts in Excel (it can't directly manipulate your Excel file)</p>
+                    <p style="margin-top: 10px;"><strong>Claude DOES guide you on:</strong></p>
+                    <ul>
+                        <li>Which chart type to use for your specific data and goals</li>
+                        <li>How to set up the chart</li>
+                        <li>What data to include</li>
+                        <li>Best practices for clarity and impact</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>How to Ask for Chart Guidance</h4>
+                    <p>Describe your data structure and your goal:</p>
+                    <p style="font-family: 'Courier New', monospace; background: white; padding: 10px; border-radius: 4px; margin-top: 10px;">"I have quarterly revenue data by product category (4 quarters, 5 categories). What chart type should I use to show trends over time?"</p>
+                    <p style="margin-top: 10px;">Claude will recommend the chart type and explain why it's the best choice for your needs.</p>
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="concept-section">
+                <div class="concept-title">Common Pitfalls and How to Avoid Them</div>
+                
+                <div class="warning-box">
+                    <h4>Pitfall 1: Vague Descriptions</h4>
+                    <p><strong>Problem:</strong> "I need a formula for sales"</p>
+                    <p><strong>Solution:</strong> Include column layout, what to calculate, conditions, and where result goes</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Pitfall 2: Not Testing Formulas</h4>
+                    <p><strong>Problem:</strong> Applying formulas to entire dataset without testing</p>
+                    <p><strong>Solution:</strong> Always test on 5-10 rows first, verify results, then apply broadly</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Pitfall 3: Blindly Trusting Results</h4>
+                    <p><strong>Problem:</strong> Not verifying Claude's calculations</p>
+                    <p><strong>Solution:</strong> Spot-check formulas manually, verify totals make sense, ask Claude to explain surprising findings</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Pitfall 4: Overcomplicating Simple Tasks</h4>
+                    <p><strong>Problem:</strong> Using AI for analysis that takes 2 minutes to do manually</p>
+                    <p><strong>Solution:</strong> Ask yourself: Is this repetitive? Will explaining to Claude take longer? Is this high value?</p>
+                </div>
+            </div>
+
+            <!-- Connecting Modules -->
+            <div class="concept-section">
+                <div class="concept-title">Combining Module 3 + Module 6</div>
+                
+                <div class="concept-box">
+                    <h4>The Complete Workflow</h4>
+                    <p><strong>Step 1:</strong> Generate test data using Module 3 techniques (CSV with specific structure)</p>
+                    <p><strong>Step 2:</strong> Import into Excel (you learned this in Module 3)</p>
+                    <p><strong>Step 3:</strong> Use Claude to create analysis formulas for that data</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #558b2f;">This is the power of combining modules: Generate data, then analyze it.</p>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Claude enables data analysis through conversation instead of coding. Describe your data structure (columns, what's where), what you need to calculate, and any conditions. Claude provides formulas and step-by-step instructions. Always test formulas on small samples before applying to full datasets. Verify AI-generated insights before sharing. Use Claude strategically for complex or repetitive tasks, not for simple 2-minute manual work. Combine with Module 3 to generate data then analyze it.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed data analysis fundamentals. Now demonstrate your understanding and earn Data Analyst status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-002/module6-quiz.html" class="quiz-button">Take Module 6 Quiz</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
